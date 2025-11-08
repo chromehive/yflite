@@ -9,7 +9,7 @@ YFlite DevKit is a PHP package designed to streamline the setup and configuratio
 You can install the package with Composer (when published to Packagist or your own repository):
 
 ```bash
-composer require chromehive/yflite
+composer require chromehive/yflite:dev-main
 ```
 
 ## Usage
