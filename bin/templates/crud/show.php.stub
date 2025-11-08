@@ -1,0 +1,32 @@
+<?php $title = '{{resourceTitle}} Details'; ?>
+<?php ob_start(); ?>
+
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">{{resourceTitle}} Details</h1>
+    
+    <div class="bg-white border border-gray-300 rounded p-6 max-w-2xl">
+        <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <dt class="font-semibold">ID</dt>
+                <dd><?= htmlspecialchars($item['id'] ?? '') ?></dd>
+            </div>
+            <div>
+                <dt class="font-semibold">Name</dt>
+                <dd><?= htmlspecialchars($item['name'] ?? '') ?></dd>
+            </div>
+        </dl>
+        
+        <div class="mt-6 flex space-x-4">
+            <a href="/{{resource}}/<?= htmlspecialchars($item['id'] ?? '') ?>/edit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                Edit
+            </a>
+            <a href="/{{resource}}" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
+                Back to List
+            </a>
+        </div>
+    </div>
+</div>
+
+<?php $slot = ob_get_clean(); ?>
+<?php include __DIR__ . '/../../layout.php'; ?>
+

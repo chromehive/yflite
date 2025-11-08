@@ -1,0 +1,36 @@
+{
+  "name": "chromehive/yflite",
+  "description": "YFlite developer kit: CLI scaffolding and project starter utilities.",
+  "type": "library",
+  "version": "1.0.0",
+  "license": "MIT",
+  "homepage": "https://github.com/chromehive/yflite",
+  "authors": [
+    {
+      "name": "Chromehive",
+      "email": "hello@mychromehive.com"
+    }
+  ],
+  "require": {
+    "php": "^7.4 || ^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Chromehive\\YFlite\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Chromehive\\YFlite\\Tests\\": "tests/"
+    }
+  },
+  "bin": [
+    "yflite",
+    "bin/dev-start"
+  ],
+  "scripts": {
+    "test": "phpunit"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}

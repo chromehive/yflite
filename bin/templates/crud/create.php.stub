@@ -1,0 +1,34 @@
+<?php $title = 'Create {{resourceTitle}}'; ?>
+<?php ob_start(); ?>
+
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Create {{resourceTitle}}</h1>
+    
+    <?php if (!empty($errors)): ?>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            <ul>
+                <?php foreach ($errors as $field => $fieldErrors): ?>
+                    <?php foreach ((array)$fieldErrors as $error): ?>
+                        <li><?= htmlspecialchars($error) ?></li>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+    
+    <form method="POST" action="/{{resource}}/store"{{enctype}} class="max-w-2xl">
+{{formFields}}
+        <div class="flex space-x-4">
+            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                Create
+            </button>
+            <a href="/{{resource}}" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+<?php $slot = ob_get_clean(); ?>
+<?php include __DIR__ . '/../../layout.php'; ?>
+

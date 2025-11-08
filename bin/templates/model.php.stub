@@ -1,0 +1,37 @@
+<?php
+/**
+ * {{className}} Model
+ */
+
+class {{className}} {
+    protected $table = '{{tableName}}';
+    
+    /**
+     * Get table name
+     */
+    public static function table() {
+        return (new self())->table;
+    }
+    
+    /**
+     * Find a record by ID
+     */
+    public static function find($id) {
+        return db_find(self::table(), $id);
+    }
+    
+    /**
+     * Get all records
+     */
+    public static function all($limit = null, $offset = 0) {
+        return db_all(self::table(), $limit, $offset);
+    }
+    
+    /**
+     * Count records
+     */
+    public static function count() {
+        return db_count(self::table());
+    }
+}
+

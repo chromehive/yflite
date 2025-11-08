@@ -1,0 +1,75 @@
+@tailwind base;
+
+@layer base {
+  body {
+    font-family: "Inter", "Segoe UI", "DM Mono", Tahoma, Geneva, Verdana,
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .active-link {
+    /* Example styles for the active link */
+    color: #1652f9; /* A shade of orange, to match your "Apply Now" button */
+    font-weight: bold;
+    /* You can add more styles like an underline, background, etc. */
+    border-bottom: 2px solid #1652f9;
+  }
+}
+
+@layer components {
+  .prose ul {
+    @apply list-disc mb-[1.2rem];
+  }
+
+  .prose ol {
+    @apply list-decimal mb-[1.2rem];
+  }
+
+  .prose ul,
+  .prose ol,
+  .prose ul li,
+  .prose ol li {
+    @apply ml-5;
+  }
+
+  .prose h2 {
+    @apply text-[1.5rem] pt-7 md:text-3xl 2xl:text-[3rem] 2xl:leading-[3rem] leading-6 pb-4 italic font-serif;
+  }
+
+  .prose p {
+    @apply text-lg mb-[1.2rem] 2xl:text-[2rem] 2xl:leading-[3rem] font-sans;
+  }
+
+  .prose h3 {
+    @apply text-[1.1rem] pt-4 md:text-2xl 2xl:text-[2.5rem] 2xl:leading-[2.5rem] leading-6 pb-3 italic font-sans;
+  }
+
+  .prose code {
+    @apply text-gray-600;
+    /* bg-gray-100 */
+  }
+
+  .prose pre {
+    @apply bg-gray-900 text-white font-mono p-3 rounded-md;
+  }
+
+  .prose pre code {
+    @apply text-inherit p-0 bg-none text-sm;
+  }
+
+  .prose img {
+    @apply max-w-full h-auto;
+  }
+
+  .prose blockquote {
+    @apply pl-4 border-l-2 border-solid border-gray-300 dark:border-gray-500;
+  }
+
+  .prose hr {
+    @apply border-t-2 border-solid border-gray-100 dark:border-gray-300 my-8;
+  }
+}
+
+@tailwind components;
+@tailwind utilities;
