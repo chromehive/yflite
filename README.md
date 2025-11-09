@@ -14,7 +14,7 @@ A PHP scaffolding tool for rapid application development.
 ## Installation
 
 ```bash
-composer require chromehive/yflite
+composer require chromehive/yflite:dev-main
 ```
 
 ## Usage
@@ -63,3 +63,4 @@ php vendor/bin/yflite make:route GET /api/data api:data
 ## License
 
 MIT
+
