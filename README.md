@@ -8,8 +8,14 @@ YFlite is a lightweight PHP microframework designed for fast, modular, and react
 
 You can install the package with Composer (when published to Packagist or your own repository):
 
+### Local package installation:
 ```bash
 composer require chromehive/yflite:dev-main
+```
+
+### Global package installation:
+```bash
+composer global require chromehive/yflite:dev-main
 ```
 
 ## Developer Quickstart
@@ -27,10 +33,16 @@ cp path.php.example path.php
 
 ### Running the CLI
 
-You can use the DevKit CLI tool with:
+You can use the YFlite CLI tool with:
 
+### Local project usage:
 ```bash
 vendor/bin/yflite
+```
+
+### Global usage (if installed globally and bin dir in PATH):
+```bash
+yflite
 ```
 
 This provides commands for scaffolding pages, CRUD, models, and routes. Run the binary with no arguments to see available commands and usage examples.
