@@ -1,8 +1,8 @@
-# YFlite DevKit
+# YFlite by Chromehive
 
 ## Overview
 
-YFlite DevKit is a PHP package designed to streamline the setup and configuration of development environments. It provides a simple interface for initializing projects and includes a command-line tool for easy access.
+YFlite is a lightweight PHP microframework designed for fast, modular, and reactive web apps using HTMX and AlpineJS. It is a designed to streamline the setup and configuration of web development environments to help you build and ship web apps faster. It provides a simple interface for initializing projects and includes a command-line tool for easy access.
 
 ## Installation
 
