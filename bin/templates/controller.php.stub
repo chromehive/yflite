@@ -91,4 +91,3 @@ function {{resource}}_delete($params) {
     db_delete('{{resource}}', $id);
     redirect('/{{resource}}');
 }
-

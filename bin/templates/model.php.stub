@@ -34,4 +34,3 @@ class {{className}} {
         return db_count(self::table());
     }
 }
-
