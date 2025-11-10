@@ -1,0 +1,150 @@
+<?php
+
+/**
+ * YFlite Core Helpers
+ * Essential helper functions for YFlite applications
+ */
+
+if (!function_exists('view')) {
+    /**
+     * Render a view file with optional data
+     * @param string $path View path relative to views/ directory
+     * @param array $data Data to extract as variables
+     * @return string Rendered view content
+     */
+    function view($path, $data = [])
+    {
+        extract($data);
+        ob_start();
+        $viewFile = __DIR__ . '/views/' . str_replace('.', '/', $path) . '.php';
+        if (!file_exists($viewFile)) {
+            echo "<!-- View not found: $viewFile -->";
+        } else {
+            include $viewFile;
+        }
+        return ob_get_clean();
+    }
+}
+
+if (!function_exists('render')) {
+    /**
+     * Alias for view() - outputs directly as a full HTML page (head+body)
+     */
+    function render($path, $data = [], $layout = 'main')
+    {
+        extract($data); //$renderFile
+        $renderFile = __DIR__ . '/views/pages/' . str_replace('.', '/', $path) . '.php';
+        if (!file_exists($renderFile)) {
+            echo "<!-- Page not found: $path -->";
+        } else {
+            require_once __DIR__ . "/views/layouts/$layout.php";
+            exit;
+        }
+    }
+}
+
+if (!function_exists('redirect')) {
+    /**
+     * Perform HTTP redirect
+     * @param string $url URL to redirect to
+     * @param int $code HTTP status code (default: 302)
+     */
+    function redirect($url, $code = 302)
+    {
+        http_response_code($code);
+        header("Location: $url");
+        exit;
+    }
+}
+
+// Database helper functions (placeholders - developers can override with actual implementations)
+
+if (!function_exists('db_all')) {
+    /**
+     * Fetch all records from a table
+     * @param string $table Table name
+     * @param int|null $limit Optional limit
+     * @param int $offset Optional offset
+     * @return array Array of records
+     */
+    function db_all($table, $limit = null, $offset = 0)
+    {
+        // Placeholder - implement with your database layer
+        return [];
+    }
+}
+
+if (!function_exists('db_find')) {
+    /**
+     * Find a single record by ID
+     * @param string $table Table name
+     * @param mixed $id Record ID
+     * @return array|null Record or null if not found
+     */
+    function db_find($table, $id)
+    {
+        // Placeholder - implement with your database layer
+        return null;
+    }
+}
+
+if (!function_exists('db_insert')) {
+    /**
+     * Insert a new record
+     * @param string $table Table name
+     * @param array $data Data to insert
+     * @return mixed Inserted record ID or false on failure
+     */
+    function db_insert($table, $data)
+    {
+        // Placeholder - implement with your database layer
+        return false;
+    }
+}
+
+if (!function_exists('db_update')) {
+    /**
+     * Update a record
+     * @param string $table Table name
+     * @param mixed $id Record ID
+     * @param array $data Data to update
+     * @return bool Success status
+     */
+    function db_update($table, $id, $data)
+    {
+        // Placeholder - implement with your database layer
+        return false;
+    }
+}
+
+if (!function_exists('db_delete')) {
+    /**
+     * Delete a record
+     * @param string $table Table name
+     * @param mixed $id Record ID
+     * @return bool Success status
+     */
+    function db_delete($table, $id)
+    {
+        // Placeholder - implement with your database layer
+        return false;
+    }
+}
+
+if (!function_exists('db_count')) {
+    /**
+     * Count records in a table
+     * @param string $table Table name
+     * @return int Record count
+     */
+    function db_count($table)
+    {
+        // Placeholder - implement with your database layer
+        return 0;
+    }
+}
+
+// Start session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}

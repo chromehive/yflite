@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * {{title}} Controller
+ * Handles CRUD operations for {{title}} facing pages
+ * className === name of resource for now
+ */
+
+function {{controllerName}}() {
+    $pageTitle = $metaTitle = ucfirst('{{controllerName}}');
+    render('{{controllerName}}', compact('pageTitle', 'metaTitle'));
+}
