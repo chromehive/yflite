@@ -18,9 +18,10 @@
       "Chromehive\\YFlite\\": "src/"
     }
   },
-  "yflite": [
+  "bin": [
     "bin/yflite"
   ],
   "minimum-stability": "stable",
   "prefer-stable": true
 }
+
