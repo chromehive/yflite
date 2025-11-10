@@ -3,7 +3,6 @@
   "description": "YFlite CLI scaffolding and generators",
   "type": "library",
   "version": "0.1.0",
-  "license": "MIT",
   "homepage": "https://github.com/chromehive/yflite",
   "authors": [
     {
@@ -25,5 +24,6 @@
   "minimum-stability": "stable",
   "prefer-stable": true
 }
+
 
 
