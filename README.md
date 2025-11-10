@@ -113,11 +113,3 @@ yflite make:model User --table=users
 ```bash
 yflite make:route GET /api/data api:data
 ```
-
-## Contributing
-
-Please see `CONTRIBUTING.md` for contribution guidelines.
-
-## License
-
-This project is licensed under the MIT License — see the `LICENSE` file.
