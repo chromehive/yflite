@@ -1,0 +1,12 @@
+<!-- Add your scripts before body closing tag -->
+<script>
+    // Initialize Alpine.js
+    document.addEventListener('alpine:init', () => {
+        // Your Alpine.js component initialization here
+    });
+
+    // Initialize HTMX
+    document.addEventListener('htmx:configRequest', (event) => {
+        // Your HTMX configuration here
+    });
+</script>

@@ -1,0 +1,101 @@
+<?php
+
+/**
+ * {{title}} Controller
+ * Handles CRUD operations for {{resource}}
+ * className === resource for now
+ */
+
+function {{resource}}_index() {
+    $pageTitle = $metaTitle = ucfirst('{{resource}}');
+    $items = db_all('{{resource}}');
+    render('{{resource}}/index', compact('items', 'pageTitle', 'metaTitle'));
+}
+
+function {{resource}}_show($params) {
+    $id = $params['id'] ?? $_GET['id'] ?? null;
+    if (!$id) {
+        redirect('/{{resource}}');
+    }
+    
+    $item = db_find('{{resource}}', $id);
+    if (!$item) {
+        redirect('/{{resource}}');
+    }
+    
+    $pageTitle = $metaTitle = ucfirst('{{resource}}') . ' Details';
+    render('{{resource}}/show', compact('item', 'pageTitle', 'metaTitle'));
+}
+
+function {{resource}}_create() {
+    $pageTitle = $metaTitle = 'Create ' . ucfirst('{{resource}}');
+    render('{{resource}}/create', compact('pageTitle', 'metaTitle'));
+}
+
+function {{resource}}_store() {
+    // Validation
+    $errors = [];
+    
+    // Add your validation logic here
+    
+    if (!empty($errors)) {
+        $pageTitle = $metaTitle = 'Create ' . ucfirst('{{resource}}');
+        render('{{resource}}/create', ['errors' => $errors, 'pageTitle' => $pageTitle, 'old' => $_POST]);
+    }
+    
+    // Insert data
+    $data = $_POST;
+    db_insert('{{resource}}', $data);
+    
+    redirect('/{{resource}}');
+}
+
+function {{resource}}_edit($params) {
+    $id = $params['id'] ?? $_GET['id'] ?? null;
+    if (!$id) {
+        redirect('/{{resource}}');
+    }
+    
+    $pageTitle = $metaTitle = 'Edit ' . ucfirst('{{resource}}');
+    $item = db_find('{{resource}}', $id);
+    if (!$item) {
+        redirect('/{{resource}}');
+    }
+    
+    render('{{resource}}/edit', compact('item', 'pageTitle', 'metaTitle'));
+}
+
+function {{resource}}_update($params) {
+    $id = $params['id'] ?? $_POST['id'] ?? null;
+    if (!$id) {
+        redirect('/{{resource}}');
+    }
+    
+    // Validation
+    $errors = [];
+    
+    // Add your validation logic here
+    
+    if (!empty($errors)) {
+        $pageTitle = $metaTitle = 'Edit ' . ucfirst('{{resource}}');
+        $item = db_find('{{resource}}', $id);
+        render('{{resource}}/edit', compact('errors', 'item', 'pageTitle', 'metaTitle'));
+    }
+    
+    // Update data
+    $data = $_POST;
+    unset($data['id']); // Remove ID from update data
+    db_update('{{resource}}', $id, $data);
+    
+    redirect('/{{resource}}/' . $id);
+}
+
+function {{resource}}_delete($params) {
+    $id = $params['id'] ?? $_POST['id'] ?? $_GET['id'] ?? null;
+    if (!$id) {
+        redirect('/{{resource}}');
+    }
+    
+    db_delete('{{resource}}', $id);
+    redirect('/{{resource}}');
+}
