@@ -2,7 +2,7 @@
   "name": "chromehive/yflite",
   "description": "YFlite - Faster PHP development for newbies",
   "type": "library",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "homepage": "https://github.com/chromehive/yflite",
   "authors": [
     {
@@ -24,8 +24,3 @@
   "minimum-stability": "stable",
   "prefer-stable": true
 }
-
-
-
-
-
