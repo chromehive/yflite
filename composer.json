@@ -1,6 +1,6 @@
 {
   "name": "chromehive/yflite",
-  "description": "YFlite CLI scaffolding and generators",
+  "description": "YFlite - Faster PHP development for newbies",
   "type": "library",
   "version": "0.2.0",
   "homepage": "https://github.com/chromehive/yflite",
@@ -24,3 +24,4 @@
   "minimum-stability": "stable",
   "prefer-stable": true
 }
+
