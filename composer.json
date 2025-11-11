@@ -3,7 +3,7 @@
   "description": "YFlite - Faster PHP development for newbies",
   "type": "library",
   "license": "MIT",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "homepage": "https://github.com/chromehive/yflite",
   "authors": [
     {
@@ -25,4 +25,5 @@
   "minimum-stability": "stable",
   "prefer-stable": true
 }
+
 
