@@ -2,7 +2,7 @@
   "name": "chromehive/yflite",
   "description": "YFlite CLI scaffolding and generators",
   "type": "library",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/chromehive/yflite",
   "authors": [
     {
@@ -24,4 +24,3 @@
   "minimum-stability": "stable",
   "prefer-stable": true
 }
-

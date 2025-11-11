@@ -84,6 +84,102 @@ function createProjectStructure()
 }
 
 /**
+ * Write a file safely: if file exists prompt, backup if overwriting.
+ */
+function safeWriteFile(string $dest, string $contents): bool
+{
+    $destDir = dirname($dest);
+    if (!is_dir($destDir) && !@mkdir($destDir, 0777, true) && !is_dir($destDir)) {
+        echo "Error: Could not create directory: {$destDir}\n";
+        return false;
+    }
+
+    if (!file_exists($dest)) {
+        if (file_put_contents($dest, $contents) === false) {
+            echo "Error: Failed to write {$dest}\n";
+            return false;
+        }
+        echo "Created: {$dest}\n";
+        return true;
+    }
+
+    // Prompt user for overwrite
+    echo "File exists: {$dest}\nOverwrite? [y/N]: ";
+    $answer = strtolower(trim(fgets(STDIN) ?: ''));
+    if ($answer !== 'y') {
+        echo "Skipped: {$dest}\n";
+        return false;
+    }
+
+    // Create a timestamped backup
+    $backup = $dest . '.bak.' . date('YmdHis');
+    if (!@copy($dest, $backup)) {
+        echo "Warning: could not create backup for {$dest}. Aborting write.\n";
+        return false;
+    }
+
+    if (file_put_contents($dest, $contents) === false) {
+        echo "Error: Failed to write {$dest}\n";
+        return false;
+    }
+
+    echo "Overwrote: {$dest} (backup: {$backup})\n";
+    return true;
+}
+
+/**
+ * Create a new YFlite project structure (safe mode - prompts before overwriting)
+ */
+function createProjectStructureSafe(string $templateDir = null)
+{
+    global $projectRoot;
+
+    // Create directories
+    $directories = [
+        'controllers',
+        'models',
+        'middlewares',
+        'views/components',
+        'views/layouts',
+        'views/pages',
+        'public/assets/css',
+        'public/assets/js',
+    ];
+
+    foreach ($directories as $dir) {
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+            echo "📁 Created directory: {$dir}\n";
+        }
+    }
+
+    // Files to create with their content
+    $files = [
+        'bootstrap.php' => TemplateLoader::load('bootstrap.php.stub'),
+        'config.php' => TemplateLoader::load('config.php.stub'),
+        'path.php' => TemplateLoader::load('path.php.stub'),
+        'helpers.php' => TemplateLoader::load('helpers.php.stub'),
+        'routes.php' => TemplateLoader::load('routes.php.stub'),
+        'controllers/public.php' => TemplateLoader::render('controller_alt.php.stub', ['title' => 'Public', 'controllerName' => 'home']),
+        'views/layouts/main.php' => TemplateLoader::load('layouts/main.php.stub'),
+        'views/layouts/dashboard.php' => TemplateLoader::load('layouts/dashboard.php.stub'),
+        'views/components/head.php' => TemplateLoader::load('components/head.php.stub'),
+        'views/components/header.php' => TemplateLoader::load('components/header.php.stub'),
+        'views/components/foot.php' => TemplateLoader::load('components/foot.php.stub'),
+        'views/components/footer.php' => TemplateLoader::load('components/footer.php.stub'),
+        'views/pages/home.php' => TemplateLoader::render('home.php.stub', ['title' => 'Home', 'fileName' => 'home']),
+        'views/pages/_404.php' => TemplateLoader::render('404.php.stub', ['name' => '404']),
+        'public/index.php' => TemplateLoader::load('public/index.php.stub'),
+        'public/robots.txt' => TemplateLoader::load('public/robots.txt.stub'),
+        'public/sitemap.txt' => TemplateLoader::load('public/sitemap.txt.stub'),
+    ];
+
+    foreach ($files as $path => $content) {
+        safeWriteFile($path, $content);
+    }
+}
+
+/**
  * Generate a single page
  */
 function makePage($name)
