@@ -5,7 +5,7 @@
  * Generate routes, pages, CRUD operations, and models
  */
 
-define('YFLITE_VERSION', '0.1.0');
+define('YFLITE_VERSION', '0.2.0');
 require_once __DIR__ . '/Generators.php'; //../src/
 
 // Initialize template loader to use package templates
@@ -60,16 +60,26 @@ switch ($command) {
             return !in_array($file, ['.', '..']) && !str_starts_with($file, '.');
         });
 
-        if (!empty($files)) {
-            echo "Error: Cannot initialize new project in a non-empty directory.\n";
-            echo "Please create a new empty directory and run 'yflite new' there.\n";
-            exit(1);
+        if (empty($files)) {
+            // Empty directory: use fast, non-interactive creation
+            echo "Creating new YFlite project...\n";
+            createProjectStructure();
+            echo "Project scaffolding complete.\n";
+        } else {
+            // Non-empty directory: use safe mode with user prompts
+            echo "Warning: Current directory is not empty.\n";
+            echo "Do you want to continue and selectively create project files? [y/N]: ";
+            $answer = strtolower(trim(fgets(STDIN) ?: ''));
+            if ($answer !== 'y') {
+                echo "Aborted: create project in an empty directory or run from an empty folder.\n";
+                exit(1);
+            }
+
+            echo "Creating new YFlite project (safe mode)...\n";
+            createProjectStructureSafe($templateDir);
+            echo "Project scaffolding complete.\n";
         }
 
-        echo "Creating new YFlite project...\n";
-        // Create project structure
-        createProjectStructure();
-        echo "Project created successfully!\n";
         echo "Run 'yflite start' to launch the development server.\n";
         exit(0);
 
