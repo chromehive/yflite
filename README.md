@@ -133,16 +133,16 @@ yflite make:route GET /api/data api:data
 
 Here are a few essential regex patterns and their aliases you may need if you wish to validate URI parameters from client. Feel free to make your own patterns if necessary.
 
-| Use Case             | Pattern                                                          | Example URI                                      |
-| -------------------- | ---------------------------------------------------------------- | ------------------------------------------------ |
-| Number or Numeric ID | `(\d+)`                                                          | `/users/42`                                      |
-| Slug                 | `([a-zA-Z0-9-_]+)`                                               | `/posts/hello-world`                             |
-| Username             | `([a-zA-Z0-9_]+)`                                                | `/profile/hello123_`                             |
-| UUID                 | `([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})` | `/api/item/123e4567-e89b-12d3-a456-426614174000` |
-| Y-m-D Date           | `([0-9]{4}-[0-9]{2}-[0-9]{2})`                                   | `/orders/2025-11-09`                             |
-| Alpha word           | `([A-Za-z]+)`                                                    | `/category/books`                                |
-| Alphanumeric         | `([A-Za-z0-9]+)`                                                 | `/category/books`                                |
-| Catch-all (no slash) | `([^/]+)`                                                        | `/anything/value`                                |
+| Use Case             | Pattern                                                          | Example URI                                  |
+| -------------------- | ---------------------------------------------------------------- | -------------------------------------------- |
+| Number or Numeric ID | `(\d+)`                                                          | `/users/42`                                  |
+| Slug                 | `([a-zA-Z0-9-_]+)`                                               | `/posts/hello-world`                         |
+| Username             | `([a-zA-Z0-9_]+)`                                                | `/profile/hello123_`                         |
+| UUID                 | `([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})` | `/chat/123e4567-e89b-12d3-a456-426614174000` |
+| Y-m-D Date           | `([0-9]{4}-[0-9]{2}-[0-9]{2})`                                   | `/orders/2025-11-09`                         |
+| Alpha word           | `([A-Za-z]+)`                                                    | `/category/books`                            |
+| Alphanumeric         | `([A-Za-z0-9]+)`                                                 | `/categories/101Books`                       |
+| Catch-all (no slash) | `([^/]+)`                                                        | `/anything/value`                            |
 
 Example Use of Default Regex Patterns or Aliases Available
 
@@ -167,4 +167,5 @@ Routes with middleware(s):
 ```
 
 ### Last Updated: November 12, 2025
+
 
