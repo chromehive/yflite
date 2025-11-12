@@ -18,9 +18,20 @@ if ($projectRoot === false) {
 /**
  * Create a new YFlite project structure
  */
-function createProjectStructure()
+function createProjectStructure(string $templateDir = null, string $newProjectDir = "")
 {
     global $projectRoot;
+    $dirNameChosen = "";
+
+    if (!empty($newProjectDir)) {
+        $dirNameChosen = $newProjectDir . '/';
+
+        // Ensure the project directory exists
+        if (!is_dir($dirNameChosen)) {
+            mkdir($dirNameChosen, 0777, true);
+            echo "📁  Project Directory created: " . str_replace($projectRoot . '/', '', $dirNameChosen) . "\n";
+        }
+    }
 
     // Create directories
     $directories = [
@@ -35,9 +46,9 @@ function createProjectStructure()
     ];
 
     foreach ($directories as $dir) {
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-            echo "📁 Created directory: {$dir}\n";
+        if (!is_dir($dirNameChosen . $dir)) {
+            mkdir($dirNameChosen . $dir, 0777, true);
+            echo "📁 Created directory: {$dirNameChosen}{$dir}\n";
         }
     }
 
@@ -63,22 +74,9 @@ function createProjectStructure()
     ];
 
     foreach ($files as $path => $content) {
-        if (!file_exists($path)) {
-            file_put_contents($path, $content);
-            echo "📄 Created file: {$path}\n";
-        }
-    }
-
-    // Create any missing default files if templates don't exist
-    $defaultFiles = [
-        'public/robots.txt' => "User-agent: *\nDisallow:",
-        'public/sitemap.txt' => "https://example.com/",
-    ];
-
-    foreach ($defaultFiles as $path => $content) {
-        if (!file_exists($path)) {
-            file_put_contents($path, $content);
-            echo "📄 Created file: {$path}\n";
+        if (!file_exists($dirNameChosen . $path)) {
+            file_put_contents($dirNameChosen . $path, $content);
+            echo "📄 Created file: {$dirNameChosen}{$path}\n";
         }
     }
 }
@@ -130,7 +128,7 @@ function safeWriteFile(string $dest, string $contents): bool
 /**
  * Create a new YFlite project structure (safe mode - prompts before overwriting)
  */
-function createProjectStructureSafe(string $templateDir = null)
+function createProjectStructureSafe(string $templateDir = null, string $newProjectDir = null)
 {
     global $projectRoot;
 
@@ -186,7 +184,7 @@ function makePage($name)
 {
     global $projectRoot;
     if (!$name) {
-        echo "⚠️ Please provide a page name. Example: php yflite make:page dashboard\n";
+        echo "⚠️ Please provide a page name. Example: yflite make:page dashboard\n";
         return false;
     }
 
@@ -247,7 +245,7 @@ function makeController($name)
 {
     global $projectRoot;
     if (!$name) {
-        echo "⚠️ Please provide a controller name. Example: php yflite make:controller products\n";
+        echo "⚠️ Please provide a controller name. Example: yflite make:controller products\n";
         return false;
     }
 
@@ -539,7 +537,7 @@ function makeModel($name, $table = null)
 {
     global $projectRoot;
     if (!$name) {
-        echo "⚠️ Please provide a model name. Example: php yflite make:model User\n";
+        echo "⚠️ Please provide a model name. Example: yflite make:model User\n";
         return false;
     }
 
@@ -580,7 +578,7 @@ function makeCrud($name, $fields = null)
 {
     global $projectRoot;
     if (!$name) {
-        echo "⚠️ Please provide a resource name. Example: php yflite make:crud Product\n";
+        echo "⚠️ Please provide a resource name. Example: yflite make:crud Product\n";
         return false;
     }
 
@@ -605,8 +603,8 @@ function makeCrud($name, $fields = null)
     $controllerPath = $controllerDir . '/' . $resource . '.php';
     if (!file_exists($controllerPath)) {
         $controllerTemplate = TemplateLoader::render('controller.php.stub', [
+            'title' => $className,
             'resource' => $resource,
-            'className' => $className
         ]);
         file_put_contents($controllerPath, $controllerTemplate);
         echo "✅ Controller created: controllers/$resource.php\n";

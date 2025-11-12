@@ -6,7 +6,6 @@ A PHP scaffolding tool for rapid application development using YFlite, a lightwe
 
 - Generate pages with layout support
 - CRUD scaffolding with model, controller and views
-- Tailwind CSS styled templates
 - Form field generation with validation
 - Route management
 - Models with basic database operations
@@ -16,7 +15,7 @@ A PHP scaffolding tool for rapid application development using YFlite, a lightwe
 You can install it globally on your computer if you have the PHP environment with composer installed.
 
 ```bash
-composer global require chromehive/yflite:dev-main
+composer global require chromehive/yflite
 ```
 
 ## Developer Quickstart
@@ -27,11 +26,19 @@ After installing via Composer, run the command below to see if YFlite installed 
 yflite -v
 ```
 
-Is it available to you? Then, let's open a fresh directory and run this code once to set up your development project
+Does it show you the version number? Then, YFlite is available to you? Now, let's open or create a fresh directory and run this code in the terminal for that directory once to set up your development project.
 
 ```bash
 yflite new
 ```
+
+If you want to have the project initialise in a fresh project directory and run:
+
+```bash
+yflite new <app-name>
+```
+
+For example: `yflite new fire-app-project`
 
 ## Usage
 
@@ -41,10 +48,18 @@ Start the development server using:
 yflite start
 ```
 
+To compile your production-ready build:
+
+```bash
+yflite build <build-folder>
+```
+
+If the name of the build folder is not specified, the default `/dist` folder will be created automatically in the project root directory.
+
 ## Initialised Folder/File Structure
 
 ```bash
-yflite/
+<your-app-name>/
 ├── controllers/
 │   └── public.php
 ├── models/
@@ -113,3 +128,42 @@ yflite make:model User --table=users
 ```bash
 yflite make:route GET /api/data api:data
 ```
+
+## Route Regex Examples for URI Parameters
+
+Here are a few essential regex patterns and their aliases you may need if you wish to validate URI parameters from client. Feel free to make your own patterns if necessary.
+
+| Use Case             | Alias       | Pattern                                                          | Example URI                                      |
+| -------------------- | ----------- | ---------------------------------------------------------------- | ------------------------------------------------ |
+| Number or Numeric ID | :id or :int | `(\d+)`                                                          | `/users/42`                                      |
+| Slug                 | :slug       | `([a-zA-Z0-9-_]+)`                                               | `/posts/hello-world`                             |
+| Username             | :username   | `([a-zA-Z0-9_]+)`                                                | `/profile/hello123_`                             |
+| UUID                 | :uuid       | `([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})` | `/api/item/123e4567-e89b-12d3-a456-426614174000` |
+| Y-m-D Date           | :date       | `([0-9]{4}-[0-9]{2}-[0-9]{2})`                                   | `/orders/2025-11-09`                             |
+| Alpha word           | :alpha      | `([A-Za-z]+)`                                                    | `/category/books`                                |
+| Alphanumeric         | :alphanum   | `([A-Za-z0-9]+)`                                                 | `/category/books`                                |
+| Catch-all (no slash) | :any        | `([^/]+)`                                                        | `/anything/value`                                |
+
+Example Use of Default Regex Patterns or Aliases Available
+
+```php
+return [
+    ['GET', '/users/(\d+)', 'users:users_show'],
+    ['GET', '/posts/([a-zA-Z0-9-_]+)', 'blog:post_view'],
+    ['GET', '/@([a-zA-Z0-9_]+)', 'user:profile'],
+];
+```
+
+Normal route format:
+
+```php
+    ['METHOD', '/route', 'file:function'],
+```
+
+Routes with middleware(s):
+
+```php
+    ['METHOD', '/route', 'file:function', 'mwfile1:mwfunc1, mwfile2:mwfunc2'],
+```
+
+### Last Updated: November 12, 2025

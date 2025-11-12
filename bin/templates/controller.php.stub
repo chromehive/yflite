@@ -13,7 +13,7 @@ function {{resource}}_index() {
 }
 
 function {{resource}}_show($params) {
-    $id = $params['id'] ?? $_GET['id'] ?? null;
+    $id = $params ?? $_GET['id'] ?? null;
     if (!$id) {
         redirect('/{{resource}}');
     }
@@ -51,7 +51,7 @@ function {{resource}}_store() {
 }
 
 function {{resource}}_edit($params) {
-    $id = $params['id'] ?? $_GET['id'] ?? null;
+    $id = $params ?? $_GET['id'] ?? null;
     if (!$id) {
         redirect('/{{resource}}');
     }
@@ -66,7 +66,7 @@ function {{resource}}_edit($params) {
 }
 
 function {{resource}}_update($params) {
-    $id = $params['id'] ?? $_POST['id'] ?? null;
+    $id = $params ?? $_POST['id'] ?? null;
     if (!$id) {
         redirect('/{{resource}}');
     }
@@ -91,7 +91,7 @@ function {{resource}}_update($params) {
 }
 
 function {{resource}}_delete($params) {
-    $id = $params['id'] ?? $_POST['id'] ?? $_GET['id'] ?? null;
+    $id = $params ?? $_POST['id'] ?? $_GET['id'] ?? null;
     if (!$id) {
         redirect('/{{resource}}');
     }
