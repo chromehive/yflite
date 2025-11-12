@@ -1,15 +1,21 @@
 <?php
 
-/**
+/*
  * YFlite - Routes Configuration
  * Define your application routes here
- * Regex Examples (\d+) ([a-zA-Z0-9-_]+)
- * Normal route format ['METHOD', 'route', 'file:function'],
- * Example route with middleware(s) ['METHOD', 'route', 'file:function', 'mwfile1:mwfunc1, mwfile1:mwfunc2, mwfile2:mwfunc2'],
+ *
+ * Regex Examples for URI parameters:
+ *    (\d+)                     → numeric ID (e.g. /users/42)
+ *    ([a-zA-Z0-9-_]+)          → slug or username
+ *    ([A-Za-z]+)               → single word alpha (e.g. /category/books)
+ * See README.md for more patterns
+ *    E.g.: ['GET', '/users/(\d+)', 'users:users_show'],
+ *
+ * Normal route format: ['METHOD', '/route', 'file:function'],
+ * Route with middleware(s):
+ *    ['METHOD', '/route', 'file:function', 'mwfile1:mwfunc1, mwfile2:mwfunc2'],
  */
 
 return [
     ['GET', '/', 'public:home'],
-
-   
 ];
