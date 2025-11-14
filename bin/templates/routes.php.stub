@@ -5,11 +5,12 @@
  * Define your application routes here
  *
  * Regex Examples for URI parameters:
- *    (\d+)                     → numeric ID (e.g. /users/42)
- *    ([a-zA-Z0-9-_]+)          → slug or username
- *    ([A-Za-z]+)               → single word alpha (e.g. /category/books)
+ *    (\d+) or :id               → numeric ID (e.g. /users/42)
+ *    ([a-zA-Z0-9-_]+) or :slug  → slug of blog URLs (e.g. /blog/what-is-yflite)
+ *    ([A-Za-z]+) or :alpha      → single word alpha (e.g. /category/books)
  * See README.md for more patterns
  *    E.g.: ["GET", "/users/(\d+)", "users:users_show"],
+ *          ["GET", "/@:username", "member:profile"],
  *
  * Normal route format: ["METHOD", "/route", "file:function"],
  * Route with middleware(s):
