@@ -48,13 +48,26 @@ Start the development server using:
 yflite start
 ```
 
+If you used `yflite new <app-name>` to initialise your project, then you need to switch to that directory first.
+
+```bash
+cd <app-name>
+yflite start
+```
+
 To compile your production-ready build:
 
 ```bash
-yflite build <build-folder>
+yflite build <project-build-name>
 ```
 
-If the name of the build folder is not specified, the default `/dist` folder will be created automatically in the project root directory.
+To compile your production-ready build in zip format:
+
+```bash
+yflite buildzip <project-build-name>
+```
+
+If the name of the build folder is omitted, the default `/dist` folder or `dist.zip` will be created automatically in the project root directory.
 
 ## Initialised Folder/File Structure
 
@@ -63,13 +76,14 @@ If the name of the build folder is not specified, the default `/dist` folder wil
 ├── controllers/
 │   └── public.php
 ├── models/
+├── helpers/
 ├── middlewares/
 ├── vendor/
-├── public/              # Server entry point
+├── public/
 │   ├── assets/
 │   │   ├── css/
 │   │   └── js/
-│   ├── index.php
+│   ├── index.php    # Server entry point
 │   ├── robots.txt
 │   └── sitemap.txt
 ├── views/
@@ -133,23 +147,22 @@ yflite make:route GET /api/data api:data
 
 Here are a few essential regex patterns and their aliases you may need if you wish to validate URI parameters from client. Feel free to make your own patterns if necessary.
 
-| Use Case             | Pattern                                                          | Example URI                                  |
-| -------------------- | ---------------------------------------------------------------- | -------------------------------------------- |
-| Number or Numeric ID | `(\d+)`                                                          | `/users/42`                                  |
-| Slug                 | `([a-zA-Z0-9-_]+)`                                               | `/posts/hello-world`                         |
-| Username             | `([a-zA-Z0-9_]+)`                                                | `/profile/hello123_`                         |
-| UUID                 | `([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})` | `/chat/123e4567-e89b-12d3-a456-426614174000` |
-| Y-m-D Date           | `([0-9]{4}-[0-9]{2}-[0-9]{2})`                                   | `/orders/2025-11-09`                         |
-| Alpha word           | `([A-Za-z]+)`                                                    | `/category/books`                            |
-| Alphanumeric         | `([A-Za-z0-9]+)`                                                 | `/categories/101Books`                       |
-| Catch-all (no slash) | `([^/]+)`                                                        | `/anything/value`                            |
+| Use Case             | Alias       | Pattern                                                          | Example URI                                  |
+| -------------------- | ----------- | ---------------------------------------------------------------- | -------------------------------------------- |
+| Number or Numeric ID | :id or :int | `(\d+)`                                                          | `/users/42`                                  |
+| Slug                 | :slug       | `([a-zA-Z0-9-_]+)`                                               | `/posts/hello-world`                         |
+| Username             | :username   | `([a-zA-Z0-9_]+)`                                                | `/profile/hello123_`                         |
+| UUID                 | :uuid       | `([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})` | `/chat/123e4567-e89b-12d3-a456-426614174000` |
+| Y-m-D Date           | :date       | `([0-9]{4}-[0-9]{2}-[0-9]{2})`                                   | `/orders/2025-11-09`                         |
+| Alpha word           | :alpha      | `([A-Za-z]+)`                                                    | `/category/books`                            |
+| Alphanumeric         | :alphanum   | `([A-Za-z0-9]+)`                                                 | `/category/101Books`                         |
+| Catch-all (no slash) | :any        | `([^/]+)`                                                        | `/anything/value`                            |
 
 Example Use of Default Regex Patterns or Aliases Available
 
 ```php
 return [
-    ['GET', '/users/(\d+)', 'users:users_show'],
-    ['GET', '/posts/([a-zA-Z0-9-_]+)', 'blog:post_view'],
+    ['GET', '/posts/:slug', 'blog:post_view'],
     ['GET', '/@([a-zA-Z0-9_]+)', 'user:profile'],
 ];
 ```
@@ -166,6 +179,4 @@ Routes with middleware(s):
     ['METHOD', '/route', 'file:function', 'mwfile1:mwfunc1, mwfile2:mwfunc2'],
 ```
 
-### Last Updated: November 12, 2025
-
-
+### Last Updated: November 14, 2025

@@ -5,7 +5,7 @@
         <p class="text-gray-600">
             404 Not Found
             <br>
-            <a href="/">
+            <a href="/" hx-replace-url="true" hx-boost="true" hx-target="body">
                 Return Home
             </a>
         </p>
