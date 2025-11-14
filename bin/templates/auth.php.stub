@@ -1,0 +1,7 @@
+<?php
+function auth_user()
+{
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: /");
+    }
+}

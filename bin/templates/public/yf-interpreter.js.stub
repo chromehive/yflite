@@ -1,0 +1,111 @@
+// public/js/yf-interpreter.js
+(function () {
+  function bindYF(root = document) {
+    const els = root.querySelectorAll("[yf]");
+    if (!els.length) return;
+
+    els.forEach((el) => {
+      if (el.hasAttribute("yf-bound")) return;
+      el.setAttribute("yf-bound", "true");
+
+      const raw = el.getAttribute("yf");
+      if (!raw) return;
+
+      let [evt, token] = raw.includes(":")
+        ? raw.split(/:(.*)/s)
+        : ["click", raw];
+      evt = evt.trim();
+
+      el.addEventListener(evt, async function handler(e) {
+        const isLink = el.tagName.toLowerCase() === "a";
+        const href = el.getAttribute("href");
+
+        e.preventDefault();
+
+        // Lock to prevent concurrent decode attempts
+        if (el.hasAttribute("yf-dec-pending")) return;
+        el.setAttribute("yf-dec-pending", "1");
+
+        try {
+          const res = await fetch("/yf/decode", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token }),
+          });
+
+          if (!res.ok) {
+            console.error("YF decode failed status", res.status);
+            return;
+          }
+
+          const attrs = await res.json();
+
+          // Apply attributes and remove yf to prevent future decode loops
+          Object.entries(attrs || {}).forEach(([k, v]) =>
+            el.setAttribute(k, v)
+          );
+          el.removeAttribute("yf");
+
+          // Allow HTMX to process attributes
+          if (window.htmx) htmx.process(el);
+
+          // <a> with hx-boost to be better than React Router <Link>
+          if (isLink) {
+            if (attrs["hx-boost"] === "true") {
+              // Trigger boosted navigation immediately
+              console.log("Partial Reload!");
+              htmx.trigger(el, "click");
+            } else {
+              // Normal fallback navigation
+              console.log("Full Reload!");
+              window.location.href = href;
+            }
+          }
+
+          // Execute the decoded HTMX request directly
+          if (window.htmx) {
+            if (attrs["hx-get"]) {
+              htmx.ajax("GET", attrs["hx-get"], {
+                target: attrs["hx-target"],
+                swap: attrs["hx-swap"] || "innerHTML",
+                source: el,
+              });
+            } else if (attrs["hx-post"]) {
+              htmx.ajax("POST", attrs["hx-post"], {
+                target: attrs["hx-target"],
+                swap: attrs["hx-swap"] || "innerHTML",
+                source: el,
+              });
+            } else if (attrs["hx-put"]) {
+              htmx.ajax("PUT", attrs["hx-put"], {
+                target: attrs["hx-target"],
+                swap: attrs["hx-swap"] || "innerHTML",
+                source: el,
+              });
+            } else if (attrs["hx-delete"]) {
+              htmx.ajax("DELETE", attrs["hx-delete"], {
+                target: attrs["hx-target"],
+                swap: attrs["hx-swap"] || "innerHTML",
+                source: el,
+              });
+            }
+          }
+        } catch (err) {
+          console.error("YF decode error", err);
+        } finally {
+          el.removeAttribute("yf-dec-pending");
+          el.removeEventListener(evt, handler);
+        }
+      });
+    });
+  }
+
+  // Initial bind
+  document.addEventListener("DOMContentLoaded", () => bindYF(document));
+
+  // Rebind after HTMX content events
+  if (window.htmx) {
+    document.addEventListener("htmx:afterSwap", (evt) => bindYF(evt.target));
+    document.addEventListener("htmx:afterSettle", (evt) => bindYF(evt.target));
+  }
+})();

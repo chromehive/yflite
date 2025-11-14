@@ -1,11 +1,11 @@
 #!/usr/bin/env php
 <?php
-/**
+/** 
  * YFlite CLI Scaffolding Tool
  * Generate routes, pages, CRUD operations, and models
  */
 
-define('YFLITE_VERSION', '0.3.0');
+define('YFLITE_VERSION', '0.4.0');
 require_once __DIR__ . '/Generators.php'; //../src/
 
 // Initialize template loader to use package templates
@@ -34,8 +34,18 @@ if ($command === 'build') {
     $name = $argv[2] ?? 'dist';
     $pf = $projectRoot . DIRECTORY_SEPARATOR . $name;
     if (!empty($name)) {
-        echo "Production Build Compiled successfully: $pf";
+        echo "Production Build Compiled Successfully: $pf";
         shell_exec("php ../scripts/pack_production.php --dest={$name}");
+        exit(0);
+    }
+}
+
+if ($command === 'buildzip') {
+    $name = $argv[2] ?? 'dist';
+    $pf = $projectRoot . DIRECTORY_SEPARATOR . $name;
+    if (!empty($name)) {
+        echo "Production Build Zip Created Successfully: $pf";
+        shell_exec("php ../scripts/pack_production.php --dest={$name} --zip");
         exit(0);
     }
 }
@@ -53,11 +63,13 @@ if (!$command || $command === '-h' || $command === '--help') {
     echo "  make:controller <name1> <name2>    Generate controller\n";
     echo "  make:crud <resourceName> [--fields=\"...\"]  Generate full CRUD\n";
     echo "  make:model <ModelName> [--table=table_name]  Generate model\n";
-    echo "  make:route <METHOD> <path> <handler>  Add route\n\n";
-    echo "  build [--dest=dist] [--zip] [--controllers=a.php,b.php] [--models=j.php,k.php] [--views=x.php,y.php] [--include-file=path] Get Production Build\n\n";
+    echo "  make:route <METHOD> <path> <handler>  Add route\n";
+    echo "  build <project-build-name>         Get Production Build\n";
+    echo "  buildzip <project-build-name>      Get Zip of Production Build\n\n";
     echo "Examples:\n";
     echo "  yflite new fire-app\n";
-    echo "  yflite build --dest=v2\n";
+    echo "  yflite build v2\n";
+    echo "  yflite buildzip v2\n";
     echo "  yflite make:page dashboard\n";
     echo "  yflite make:page home about contact\n";
     echo "  yflite make:page settings/profile\n";
@@ -81,7 +93,9 @@ switch ($command) {
             echo "Creating new YFlite project...\n";
             createProjectStructure(null, $newProjectDir);
             echo "Project scaffolding complete.\n";
-            echo "Run 'yflite start' to launch the development server.\n";
+            echo "Run your development server using:.\n";
+            echo "cd ./{$newProjectDir}\n";
+            echo "yflite start \n";
             exit(1);
         }
 
@@ -93,25 +107,27 @@ switch ($command) {
         } else {
             // Non-empty directory: use safe mode with user prompts
             echo "Warning: Current directory is not empty.\n";
-            echo "Do you want to continue and selectively create project files? [y/N]: ";
+            echo "Wish to continue in this current directory and selectively create project files? [y/N]: ";
             $answer = strtolower(trim(fgets(STDIN) ?: ''));
             if ($answer !== 'y') {
                 // Ask if user wants to create a new project directory
                 echo "Do you want to create a new directory for this project? [y/N]: ";
                 $answer2 = strtolower(trim(fgets(STDIN) ?: ''));
                 if ($answer2 !== 'y') {
-                    echo "Aborted: create project in an empty directory or run from an empty folder.\n";
+                    echo "Aborted: let's make an awesome project later then.\n";
                     exit(1);
                 } else {
                     echo "Name your new project: ";
                     $answer3 = strtolower(trim(fgets(STDIN) ?: ''));
                     if (!empty($answer3)) {
-                        echo "Great choice!";
+                        echo "Great choice!\n";
                         // Make new named directory and begin scaffolding
-                        echo "Creating new YFlite project... ./$answer \n";
+                        echo "Creating new YFlite project... ./$answer3 \n";
                         createProjectStructure(null, $answer3);
                         echo "Project scaffolding complete.\n";
-                        echo "Run 'yflite start' to launch the development server.\n";
+                        echo "Run your development server using:\n";
+                        echo "cd ./{$answer3}\n";
+                        echo "yflite start\n";
                         exit(0);
                     }
                 }
@@ -199,6 +215,6 @@ switch ($command) {
 
     default:
         echo "❌ Unknown command: $command\n";
-        echo "Run 'yflite' to see available commands.\n";
+        echo "Run 'yflite -h' to see available commands.\n";
         exit(1);
 }

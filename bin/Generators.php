@@ -37,6 +37,7 @@ function createProjectStructure(string $templateDir = null, string $newProjectDi
     $directories = [
         'controllers',
         'models',
+        'helpers',
         'middlewares',
         'views/components',
         'views/layouts',
@@ -60,6 +61,9 @@ function createProjectStructure(string $templateDir = null, string $newProjectDi
         'helpers.php' => TemplateLoader::load('helpers.php.stub'),
         'routes.php' => TemplateLoader::load('routes.php.stub'),
         'controllers/public.php' => TemplateLoader::render('controller_alt.php.stub', ['title' => 'Public', 'controllerName' => 'home']),
+        'controllers/yf.php' => TemplateLoader::load('yf.php.stub'),
+        'helpers/security.php' => TemplateLoader::load('helpers/security.php.stub'),
+        'middlewares/auth.php' => TemplateLoader::load('auth.php.stub'),
         'views/layouts/main.php' => TemplateLoader::load('layouts/main.php.stub'),
         'views/layouts/dashboard.php' => TemplateLoader::load('layouts/dashboard.php.stub'),
         'views/components/head.php' => TemplateLoader::load('components/head.php.stub'),
@@ -71,6 +75,11 @@ function createProjectStructure(string $templateDir = null, string $newProjectDi
         'public/index.php' => TemplateLoader::load('public/index.php.stub'),
         'public/robots.txt' => TemplateLoader::load('public/robots.txt.stub'),
         'public/sitemap.txt' => TemplateLoader::load('public/sitemap.txt.stub'),
+        'public/assets/js/debug.js' => TemplateLoader::load('public/debug.js.stub'),
+        'public/assets/js/head-support.js' => TemplateLoader::load('public/head-support.js.stub'),
+        'public/assets/js/htmx2.min.js' => TemplateLoader::load('public/htmx2.min.js.stub'),
+        'public/assets/js/hyperscript.min.js' => TemplateLoader::load('public/hyperscript.min.js.stub'),
+        'public/assets/js/yf-interpreter.js' => TemplateLoader::load('public/yf-interpreter.js.stub'),
     ];
 
     foreach ($files as $path => $content) {
@@ -136,6 +145,7 @@ function createProjectStructureSafe(string $templateDir = null, string $newProje
     $directories = [
         'controllers',
         'models',
+        'helpers',
         'middlewares',
         'views/components',
         'views/layouts',
@@ -159,6 +169,9 @@ function createProjectStructureSafe(string $templateDir = null, string $newProje
         'helpers.php' => TemplateLoader::load('helpers.php.stub'),
         'routes.php' => TemplateLoader::load('routes.php.stub'),
         'controllers/public.php' => TemplateLoader::render('controller_alt.php.stub', ['title' => 'Public', 'controllerName' => 'home']),
+        'controllers/yf.php' => TemplateLoader::load('yf.php.stub'),
+        'helpers/security.php' => TemplateLoader::load('helpers/security.php.stub'),
+        'middlewares/auth.php' => TemplateLoader::load('auth.php.stub'),
         'views/layouts/main.php' => TemplateLoader::load('layouts/main.php.stub'),
         'views/layouts/dashboard.php' => TemplateLoader::load('layouts/dashboard.php.stub'),
         'views/components/head.php' => TemplateLoader::load('components/head.php.stub'),
@@ -170,6 +183,11 @@ function createProjectStructureSafe(string $templateDir = null, string $newProje
         'public/index.php' => TemplateLoader::load('public/index.php.stub'),
         'public/robots.txt' => TemplateLoader::load('public/robots.txt.stub'),
         'public/sitemap.txt' => TemplateLoader::load('public/sitemap.txt.stub'),
+        'public/assets/js/debug.js' => TemplateLoader::load('public/debug.js.stub'),
+        'public/assets/js/head-support.js' => TemplateLoader::load('public/head-support.js.stub'),
+        'public/assets/js/htmx2.min.js' => TemplateLoader::load('public/htmx2.min.js.stub'),
+        'public/assets/js/hyperscript.min.js' => TemplateLoader::load('public/hyperscript.min.js.stub'),
+        'public/assets/js/yf-interpreter.js' => TemplateLoader::load('public/yf-interpreter.js.stub'),
     ];
 
     foreach ($files as $path => $content) {
@@ -444,8 +462,8 @@ function generateFormFields($fields, $valuesVar = null)
                 break;
 
             default:
-                // Default to text input
-                $html .= "        <input type=\"text\" name=\"$fieldName\" id=\"$fieldName\" value=\"" . $valueExpr . "\" class=\"w-full border rounded px-3 py-2\">\n";
+                // Default to text input (string type)
+                $html .= "        <input type=\"text\" name=\"$fieldName\" id=\"$fieldName\" value=\"" . $valueExpr . "\" required class=\"w-full border rounded px-3 py-2\">\n";
                 break;
         }
 

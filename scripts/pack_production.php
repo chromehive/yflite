@@ -22,6 +22,7 @@ if (isset($opts['help'])) {
     exit(0);
 }
 
+$isDestSet = isset($opts['dest']);
 $dest = $opts['dest'] ?? 'dist';
 $makeZip = isset($opts['zip']);
 $controllersArg = $opts['controllers'] ?? null;
@@ -180,6 +181,18 @@ if ($makeZip) {
         }
         $zip->close();
         echo "Created {$zipFile}\n";
+
+        // echo 'Folder Exist? ' . file_exists($dest);
+        // echo 'Destination Set? ' . $isDestSet;
+
+        if (empty($isDestSet)) {
+            echo "Removing {$dest} directory \n";
+            rrmdir($dest);
+            // echo 'Folder Still Exist? ' . file_exists($dest);
+        } else {
+            echo "Keeping {$dest} directory \n";
+            // echo 'Folder Still Exist? ' . file_exists($dest);
+        }
     } else {
         echo "Failed to create zip\n";
     }

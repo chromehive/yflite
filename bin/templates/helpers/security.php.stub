@@ -1,0 +1,48 @@
+<?php
+define('YF_SECRET', bin2hex(random_bytes(4)));
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['YF_SECRET'])) {
+    $_SESSION['YF_SECRET'] = bin2hex(random_bytes(4));
+}
+
+function yf_enc($data)
+{
+    $tkn = $_SESSION['YF_SECRET'];
+    return htmlspecialchars(base64_encode($data . ' tkn="' . $tkn . '"'));
+}
+
+function yf_dec($data)
+{
+    return base64_decode($data);
+}
+
+
+function yf_encrypt($data, $key)
+{
+    $iv = random_bytes(12);
+    $ciphertext = openssl_encrypt(json_encode($data), 'aes-256-gcm', $key, OPENSSL_RAW_DATA, $iv, $tag);
+    return base64_encode($iv . $tag . $ciphertext);
+}
+
+function yf_decrypt($data, $key)
+{
+    $decoded = base64_decode($data);
+    $iv = substr($decoded, 0, 12);
+    $tag = substr($decoded, 12, 16);
+    $ciphertext = substr($decoded, 28);
+    $plaintext = openssl_decrypt($ciphertext, 'aes-256-gcm', $key, OPENSSL_RAW_DATA, $iv, $tag);
+    return json_decode($plaintext, true);
+}
+
+function yf_create_token($payload, $ttl = 60)
+{
+    $key = YF_SECRET;
+    $payload['iat'] = time();
+    $payload['exp'] = time() + $ttl;
+    $payload['nonce'] = bin2hex(random_bytes(8));
+    return yf_encrypt($payload, $key);
+}
