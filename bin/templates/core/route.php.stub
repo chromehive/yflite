@@ -1,0 +1,17 @@
+<?php
+
+$default_routes = [
+    ["POST", "/yf/decode", "yf:yfDecode", null, false, "never"],
+];
+
+// If routes include file exists, merge it
+$customRoutes = __DIR__ . "/../routes/index.php";
+if (file_exists($customRoutes)) {
+    $customR = include $customRoutes;
+} else {
+    $customR = [];
+}
+
+if (is_array($customR)) $all_routes = array_merge($default_routes, $customR);
+
+return $all_routes;

@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * YFlite - Core Configuration File
+ */
+
+// return [
+//     'app' => [
+//         'name' => 'YFlite App',
+//         'env' => 'development',
+//         'debug' => true,
+//         'url' => 'http://localhost:7777',
+//     ],
+
+//     'database' => [
+//         'driver' => 'mysql',
+//         'host' => 'localhost',
+//         'database' => 'yflite',
+//         'username' => 'root',
+//         'password' => '',
+//         'charset' => 'utf8mb4',
+//         'collation' => 'utf8mb4_unicode_ci',
+//         'prefix' => '',
+//     ],
+
+//     'session' => [
+//         'lifetime' => 120,
+//         'expire_on_close' => false,
+//     ],
+// ];
+
+// Internationalisation Settings
+define('DEFAULT_LANG', 'en-us');
+define('ALT_LANG', 'fr-fr');
+
+// If configurations from user project exists, load them
+$customConfigs = __DIR__ . "/../configs/index.php";
+if (file_exists($customConfigs)) {
+    include $customConfigs;
+}

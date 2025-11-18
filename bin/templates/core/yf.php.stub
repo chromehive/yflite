@@ -1,0 +1,79 @@
+<?php
+require_once __DIR__ . '/security.php';
+
+function yfDecode()
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    $body = file_get_contents('php://input');
+    $data = json_decode($body, true);
+    $token = $data['token'] ?? '';
+
+    if (!$token) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Missing token']);
+        return;
+    }
+
+    $decoded = yf_dec($token);
+    $decoded = htmlspecialchars_decode($decoded, ENT_QUOTES);
+
+    // Extract tkn value
+    preg_match('/tkn="([a-f0-9]+)"/', $decoded, $m);
+    $incomingTkn = $m[1] ?? null;
+    $sessionTkn = $_SESSION['YF_SECRET'] ?? null;
+
+    if (!$incomingTkn || $incomingTkn !== $sessionTkn) {
+        http_response_code(403);
+        echo json_encode(['error' => 'Invalid security token']);
+        return;
+    }
+
+    // Remove the token attribute before parsing other attributes
+    $decoded = preg_replace('/tkn="([a-f0-9]+)"/', '', $decoded);
+
+    // Extract any hx-* or x-* attributes flexibly
+    preg_match_all('/(hx-[a-zA-Z0-9_-]+|x-[a-zA-Z0-9_-]+)=\'([^\']*)\'/', $decoded, $matches, PREG_SET_ORDER);
+
+    $attrs = [];
+    foreach ($matches as $m) {
+        $attrs[$m[1]] = $m[2];
+    }
+
+    header('Content-Type: application/json');
+    return json_encode($attrs);
+}
+
+function yfDecode_batch()
+{
+    $key = YF_SECRET;
+    $body = file_get_contents('php://input');
+    $data = json_decode($body, true);
+    if (!isset($data['tokens'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'No tokens']);
+        exit;
+    }
+
+    $routes = json_decode(file_get_contents(__DIR__ . '/../storage/exposed_routes.json'), true);
+    $nonces = json_decode(file_get_contents(__DIR__ . '/../storage/yf_nonces.json'), true);
+    if (!$nonces) $nonces = [];
+
+    $responses = [];
+    foreach ($data['tokens'] as $token) {
+        $payload = yf_decrypt($token, $key);
+        if (!$payload) continue;
+        if ($payload['exp'] < time()) continue;
+        if (in_array($payload['nonce'], $nonces)) continue;
+
+        $nonces[] = $payload['nonce'];
+        $responses[] = $payload;
+    }
+
+    file_put_contents(__DIR__ . '/../storage/yf_nonces.json', json_encode(array_slice($nonces, -1000)));
+    file_put_contents(__DIR__ . '/../storage/yf_decode.log', json_encode(['time' => time(), 'count' => count($responses)]) . PHP_EOL, FILE_APPEND);
+
+    echo json_encode($responses);
+}

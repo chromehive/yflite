@@ -69,12 +69,16 @@ yflite buildzip <project-build-name>
 
 If the name of the build folder is omitted, the default `/dist` folder or `dist.zip` will be created automatically in the project root directory.
 
-## Initialised Folder/File Structure
+## Typical Folder/File Structure
 
 ```bash
 <your-app-name>/
 ├── controllers/
 │   └── public.php
+├── configs/
+│   ├── index.php  # Modifiable Configurations File
+│   └── route_aliases.php
+├── core/
 ├── models/
 ├── helpers/
 ├── middlewares/
@@ -94,11 +98,7 @@ If the name of the build folder is omitted, the default `/dist` folder or `dist.
 │   └── pages/
 │       ├── _404.php
 │       └── home.php
-├── bootstrap.php
-├── helpers.php
-├── config.php  # Modifiable Configurations File
 ├── composer.json
-├── composer.lock
 └── path.php    # Modifiable Path Constants File
 ```
 
@@ -145,7 +145,7 @@ yflite make:route GET /api/data api:data
 
 ## Route Regex Examples for URI Parameters
 
-Here are a few essential regex patterns and their aliases you may need if you wish to validate URI parameters from client. Feel free to make your own patterns if necessary.
+Here are a few essential regex patterns and their aliases you may need if you wish to validate URI parameters from client. Feel free to make your own patterns if necessary. You can also add custom aliases by define your patterns as accurately as possible in the `/configs/route_aliases.php`.
 
 | Use Case             | Alias       | Pattern                                                          | Example URI                                  |
 | -------------------- | ----------- | ---------------------------------------------------------------- | -------------------------------------------- |
@@ -158,7 +158,7 @@ Here are a few essential regex patterns and their aliases you may need if you wi
 | Alphanumeric         | :alphanum   | `([A-Za-z0-9]+)`                                                 | `/category/101Books`                         |
 | Catch-all (no slash) | :any        | `([^/]+)`                                                        | `/anything/value`                            |
 
-Example Use of Default Regex Patterns or Aliases Available
+Example Use of Default Regex Patterns or Aliases Available.
 
 ```php
 return [
@@ -170,13 +170,13 @@ return [
 Normal route format:
 
 ```php
-    ['METHOD', '/route', 'file:function'],
+    ['METHOD', '/route', 'ctrlrfile:function'],
 ```
 
 Routes with middleware(s):
 
 ```php
-    ['METHOD', '/route', 'file:function', 'mwfile1:mwfunc1, mwfile2:mwfunc2'],
+    ['METHOD', '/route', 'ctrlrfile:function', 'mwfile1:mwfunc1, mwfile2:mwfunc2'],
 ```
 
-### Last Updated: November 14, 2025
+### Last Updated: November 18, 2025

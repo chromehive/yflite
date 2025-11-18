@@ -3,9 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $pageTitle ?? 'YFlite App' ?></title>
-    <?php if (isset($headHtml)) require __DIR__ . "/../layout/$headHtml.php"; ?>
+    <meta name="htmx-config" content='{"allowScriptTags":"true"}'>
+    <title><?= $pageTitle ?? 'YFlite App Dashboard' ?></title>
+    <?php if (isset($headHtml)) include_once($headHtml); ?>
+    <script src="/assets/js/htmx2.min.js"></script>
+    <script src="/assets/js/hyperscript.min.js"></script>
+    <script src="/assets/js/head-support.js"></script>
+    <script src="/assets/js/debug.js"></script>
+    <script src="/assets/js/yf-interpreter.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
         /* Basic styling - customize as needed */
         body {
@@ -97,7 +106,7 @@
             </header>
 
             <main class="container mx-auto px-4 py-8">
-                <?php if (isset($path)) include_once VIEWS_PATH . "/pages/$path.php"; ?>
+                <?php if (isset($path)) include_once VIEWS_DIR . "/pages/$path.php"; ?>
             </main>
         </div>
     </div>
