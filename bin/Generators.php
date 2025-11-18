@@ -35,10 +35,13 @@ function createProjectStructure(string $templateDir = null, string $newProjectDi
 
     // Create directories
     $directories = [
+        'configs',
         'controllers',
-        'models',
+        'core',
         'helpers',
         'middlewares',
+        'models',
+        'routes',
         'views/components',
         'views/layouts',
         'views/pages',
@@ -53,16 +56,20 @@ function createProjectStructure(string $templateDir = null, string $newProjectDi
         }
     }
 
-    // Creates from or copies template files
+    // Creates from or copies template files (See If We Can Avoid Repeating This Files Block Without An Issue)
     $files = [
-        'bootstrap.php' => TemplateLoader::load('bootstrap.php.stub'),
-        'config.php' => TemplateLoader::load('config.php.stub'), //.example
-        'path.php' => TemplateLoader::load('path.php.stub'), //.example
-        'helpers.php' => TemplateLoader::load('helpers.php.stub'),
-        'routes.php' => TemplateLoader::load('routes.php.stub'),
+        'path.php' => TemplateLoader::load('path.php.stub'),
+        'core/bootstrap.php' => TemplateLoader::load('core/bootstrap.php.stub'),
+        'core/config.php' => TemplateLoader::load('core/config.php.stub'),
+        'core/helper.php' => TemplateLoader::load('core/helper.php.stub'),
+        'core/route.php' => TemplateLoader::load('core/route.php.stub'),
+        'core/security.php' => TemplateLoader::load('core/security.php.stub'),
+        'core/yf.php' => TemplateLoader::load('core/yf.php.stub'),
+        'configs/index.php' => TemplateLoader::load('configs/index.php.stub'),
+        'configs/route_aliases.php' => TemplateLoader::load('configs/route_aliases.php.stub'),
+        'helpers/index.php' => TemplateLoader::load('helpers/index.php.stub'),
+        'routes/index.php' => TemplateLoader::load('routes/index.php.stub'),
         'controllers/public.php' => TemplateLoader::render('controller_alt.php.stub', ['title' => 'Public', 'controllerName' => 'home']),
-        'controllers/yf.php' => TemplateLoader::load('yf.php.stub'),
-        'helpers/security.php' => TemplateLoader::load('helpers/security.php.stub'),
         'middlewares/auth.php' => TemplateLoader::load('auth.php.stub'),
         'views/layouts/main.php' => TemplateLoader::load('layouts/main.php.stub'),
         'views/layouts/dashboard.php' => TemplateLoader::load('layouts/dashboard.php.stub'),
@@ -143,10 +150,13 @@ function createProjectStructureSafe(string $templateDir = null, string $newProje
 
     // Create directories
     $directories = [
+        'configs',
         'controllers',
-        'models',
+        'core',
         'helpers',
         'middlewares',
+        'models',
+        'routes',
         'views/components',
         'views/layouts',
         'views/pages',
@@ -161,16 +171,20 @@ function createProjectStructureSafe(string $templateDir = null, string $newProje
         }
     }
 
-    // Files to create with their content
+    // Files to create with their content (See If We Can Avoid Repeating This Files Block Without An Issue)
     $files = [
-        'bootstrap.php' => TemplateLoader::load('bootstrap.php.stub'),
-        'config.php' => TemplateLoader::load('config.php.stub'),
         'path.php' => TemplateLoader::load('path.php.stub'),
-        'helpers.php' => TemplateLoader::load('helpers.php.stub'),
-        'routes.php' => TemplateLoader::load('routes.php.stub'),
+        'core/bootstrap.php' => TemplateLoader::load('core/bootstrap.php.stub'),
+        'core/config.php' => TemplateLoader::load('core/config.php.stub'),
+        'core/helper.php' => TemplateLoader::load('core/helper.php.stub'),
+        'core/route.php' => TemplateLoader::load('core/route.php.stub'),
+        'core/security.php' => TemplateLoader::load('core/security.php.stub'),
+        'core/yf.php' => TemplateLoader::load('core/yf.php.stub'),
+        'configs/index.php' => TemplateLoader::load('configs/index.php.stub'),
+        'configs/route_aliases.php' => TemplateLoader::load('configs/route_aliases.php.stub'),
+        'helpers/index.php' => TemplateLoader::load('helpers/index.php.stub'),
+        'routes/index.php' => TemplateLoader::load('routes/index.php.stub'),
         'controllers/public.php' => TemplateLoader::render('controller_alt.php.stub', ['title' => 'Public', 'controllerName' => 'home']),
-        'controllers/yf.php' => TemplateLoader::load('yf.php.stub'),
-        'helpers/security.php' => TemplateLoader::load('helpers/security.php.stub'),
         'middlewares/auth.php' => TemplateLoader::load('auth.php.stub'),
         'views/layouts/main.php' => TemplateLoader::load('layouts/main.php.stub'),
         'views/layouts/dashboard.php' => TemplateLoader::load('layouts/dashboard.php.stub'),
@@ -488,15 +502,15 @@ function fieldsRequireMultipart($fields)
 }
 
 /**
- * Inject a single route into routes.php
+ * Inject a single route into routes/index.php
  */
 function injectRoute($method, $path, $handler)
 {
     global $projectRoot;
-    $routesFile = $projectRoot . '/routes.php';
+    $routesFile = $projectRoot . '/routes/index.php';
 
     if (!file_exists($routesFile)) {
-        echo "⚠️ routes.php not found. Creating it...\n";
+        echo "⚠️ routes/index.php not found. Creating it...\n";
         file_put_contents($routesFile, "<?php\n\nreturn [\n];\n");
     }
 
@@ -675,7 +689,7 @@ function makeCrud($name, $fields = null)
     // Inject routes
     $routesInjected = injectCrudRoutes($resource, $className);
     if ($routesInjected > 0) {
-        echo "✅ $routesInjected CRUD routes added to routes.php\n";
+        echo "✅ $routesInjected CRUD routes added to routes/index.php\n";
     }
 
     echo "✅ CRUD scaffolding complete for: $name\n";

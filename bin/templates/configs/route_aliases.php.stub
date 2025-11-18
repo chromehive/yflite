@@ -1,0 +1,11 @@
+<?php
+
+/*
+ * YFlite - Custom Routes Aliases
+ * Define more route aliases here
+ * Below is an example. See README.md for more info.
+ */
+
+return [
+    // ':allcaps' => '([A-Z]+)',
+];

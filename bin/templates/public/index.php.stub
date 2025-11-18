@@ -4,11 +4,11 @@
 require_once __DIR__ . '/../path.php';
 
 // Load core configuration
-require_once BASE_PATH . '/config.php';
+require_once CORE_DIR . '/config.php';
 
 session_start();
 
 define('REDIRECT_URI', $_SERVER['REQUEST_URI']);
 
 // Load startup file containing the router
-require_once BASE_PATH . '/bootstrap.php';
+require_once CORE_DIR . '/bootstrap.php';

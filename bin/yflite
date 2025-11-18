@@ -5,8 +5,8 @@
  * Generate routes, pages, CRUD operations, and models
  */
 
-define('YFLITE_VERSION', '0.4.1');
-require_once __DIR__ . '/Generators.php'; //../src/
+define('YFLITE_VERSION', '1.0.0');
+require_once __DIR__ . '/Generators.php';
 
 // Initialize template loader to use package templates
 $templateDir = __DIR__ . '/templates';
@@ -23,6 +23,18 @@ if (!is_dir($templateDir)) {
 // Initialize template loader to use package templates
 TemplateLoader::setTemplateDir(__DIR__ . '/templates');
 
+// Initialize script loader to use package scripts
+$scriptDir = __DIR__ . '/scripts';
+if (!is_dir($scriptDir)) {
+    // When installed as dependency, scripts are in vendor/chromehive/yflite/bin/scripts
+    $scriptDir = __DIR__ . '/../chromehive/yflite/bin/scripts';
+}
+
+if (!is_dir($scriptDir)) {
+    echo "Error: Could not find script directory.\n";
+    exit(1);
+}
+
 $command = $argv[1] ?? null;
 
 if ($command === '-v' || $command === '--version') {
@@ -34,8 +46,8 @@ if ($command === 'build') {
     $name = $argv[2] ?? 'dist';
     $pf = $projectRoot . DIRECTORY_SEPARATOR . $name;
     if (!empty($name)) {
+        shell_exec("php $scriptDir/pack_production.php --dest={$name}");
         echo "Production Build Compiled Successfully: $pf";
-        shell_exec("php ../scripts/pack_production.php --dest={$name}");
         exit(0);
     }
 }
@@ -44,8 +56,8 @@ if ($command === 'buildzip') {
     $name = $argv[2] ?? 'dist';
     $pf = $projectRoot . DIRECTORY_SEPARATOR . $name;
     if (!empty($name)) {
-        echo "Production Build Zip Created Successfully: $pf";
-        shell_exec("php ../scripts/pack_production.php --dest={$name} --zip");
+        shell_exec("php $scriptDir/pack_production.php --dest={$name} --zip");
+        echo "Production Build Zip Created Successfully: $pf.zip";
         exit(0);
     }
 }
@@ -95,6 +107,7 @@ switch ($command) {
             echo "Project scaffolding complete.\n";
             echo "Run your development server using:.\n";
             echo "cd ./{$newProjectDir}\n";
+            echo "composer init\n";
             echo "yflite start \n";
             exit(1);
         }
@@ -127,6 +140,7 @@ switch ($command) {
                         echo "Project scaffolding complete.\n";
                         echo "Run your development server using:\n";
                         echo "cd ./{$answer3}\n";
+                        echo "composer init\n";
                         echo "yflite start\n";
                         exit(0);
                     }
@@ -138,14 +152,20 @@ switch ($command) {
             echo "Project scaffolding complete.\n";
         }
 
-        echo "Run 'yflite start' to launch the development server.\n";
+        echo "Run your development server using:\n";
+        echo "composer init\n";
+        echo "yflite start\n";
         exit(0);
 
     case 'start':
         $port = 7777;
-        echo "Starting development server on http://localhost:{$port}\n";
-        echo "Press Ctrl+C to stop\n";
-        shell_exec("php -S localhost:{$port} -t public");
+        if (file_exists($projectRoot . "/public/index.php")) {
+            echo "Starting development server on http://localhost:{$port}\n";
+            echo "Press Ctrl+C to stop\n";
+            shell_exec("php -S localhost:{$port} -t public");
+        } else {
+            echo "Entry file not found. Failed to start development server.\n";
+        }
         exit(0);
 
     case 'make:page':

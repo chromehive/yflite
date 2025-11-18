@@ -2,13 +2,16 @@
 
 /**
  * YFlite - Path Configuration
- * Copy this file to path.php and customize
+ * You can customise this file
  */
 
-define('BASE_PATH', __DIR__);
-define('APP_PATH', BASE_PATH . '/app');
-define('PUBLIC_PATH', BASE_PATH . '/public');
-define('VIEWS_PATH', BASE_PATH . '/views');
-define('STORAGE_PATH', BASE_PATH . '/storage');
-define('CACHE_PATH', STORAGE_PATH . '/cache');
-define('LOGS_PATH', STORAGE_PATH . '/logs');
+define('BASE_DIR', __DIR__); // please leave untouched
+define('CORE_DIR', BASE_DIR . '/core'); // please leave untouched
+define('PUBLIC_DIR', BASE_DIR . '/public'); // /public_html or your server's public entry
+define('CONTROLLERS_DIR', BASE_DIR . '/controllers');
+define('CONFIGS_DIR', BASE_DIR . '/configs');
+define('VIEWS_DIR', BASE_DIR . '/views');
+define('MODELS_DIR', BASE_DIR . '/models');
+define('STORAGE_DIR', BASE_DIR . '/storage');
+define('CACHE_DIR', STORAGE_DIR . '/cache');
+define('LOGS_DIR', STORAGE_DIR . '/logs');
