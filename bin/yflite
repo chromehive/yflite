@@ -108,7 +108,7 @@ if (!$command || $command === '-h' || $command === '--help') {
     echo "  make:model <ModelName> [--table=table_name]  Generate model\n";
     echo "  make:route <METHOD> <path> <handler>  Add route\n";
     echo "  build --help\n                     Display list of build commands\n";
-    echo "  build <project-build-name> [--zip] Get Production Build\n";
+    echo "  build [--dest=<project-build-name>] [--zip] Get Production Build\n";
     echo "Examples:\n";
     echo "  yflite new fire-app\n";
     echo "  yflite build --dest=v2\n";
@@ -269,3 +269,4 @@ switch ($command) {
         echo "Run 'yflite -h' to see available commands.\n";
         exit(1);
 }
+
