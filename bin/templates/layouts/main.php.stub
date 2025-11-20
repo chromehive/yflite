@@ -13,7 +13,7 @@
     <script src="/assets/js/head-support.js"></script>
     <script src="/assets/js/debug.js"></script>
     <script src="/assets/js/yf-interpreter.js" defer></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
     
     <style>
         /* Basic styling - customize as needed */
