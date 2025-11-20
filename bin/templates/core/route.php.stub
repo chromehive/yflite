@@ -1,7 +1,7 @@
 <?php
 
 $default_routes = [
-    ["POST", "/yf/decode", "yf:yfDecode", null, false, "never"],
+    ["POST", "/yf/decode", "/../core/" . "yf:yfDecode", null, false, "never"],
 ];
 
 // If routes include file exists, merge it

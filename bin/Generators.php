@@ -59,6 +59,7 @@ function createProjectStructure(string $templateDir = null, string $newProjectDi
     // Creates from or copies template files (See If We Can Avoid Repeating This Files Block Without An Issue)
     $files = [
         'path.php' => TemplateLoader::load('path.php.stub'),
+        'README.md' => TemplateLoader::load('README.md.stub'),
         'core/bootstrap.php' => TemplateLoader::load('core/bootstrap.php.stub'),
         'core/config.php' => TemplateLoader::load('core/config.php.stub'),
         'core/helper.php' => TemplateLoader::load('core/helper.php.stub'),
@@ -174,6 +175,7 @@ function createProjectStructureSafe(string $templateDir = null, string $newProje
     // Files to create with their content (See If We Can Avoid Repeating This Files Block Without An Issue)
     $files = [
         'path.php' => TemplateLoader::load('path.php.stub'),
+        'README.md' => TemplateLoader::load('README.md.stub'),
         'core/bootstrap.php' => TemplateLoader::load('core/bootstrap.php.stub'),
         'core/config.php' => TemplateLoader::load('core/config.php.stub'),
         'core/helper.php' => TemplateLoader::load('core/helper.php.stub'),
