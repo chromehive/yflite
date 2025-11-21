@@ -33,6 +33,10 @@
 define('DEFAULT_LANG', 'en-us');
 define('ALT_LANG', 'fr-fr');
 
+require_once __DIR__ . '/env.php';
+env_load(); // Load environment variabled from .env
+// Access like so $api_sec_key = env('API_SECRET_KEY');
+
 // If configurations from user project exists, load them
 $customConfigs = __DIR__ . "/../configs/index.php";
 if (file_exists($customConfigs)) {

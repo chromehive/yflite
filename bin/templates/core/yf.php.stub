@@ -57,8 +57,8 @@ function yfDecode_batch()
         exit;
     }
 
-    $routes = json_decode(file_get_contents(__DIR__ . '/../storage/exposed_routes.json'), true);
-    $nonces = json_decode(file_get_contents(__DIR__ . '/../storage/yf_nonces.json'), true);
+    $routes = json_decode(file_get_contents(__DIR__ . '/../../storage/exposed_routes.json'), true);
+    $nonces = json_decode(file_get_contents(__DIR__ . '/../../storage/yf_nonces.json'), true);
     if (!$nonces) $nonces = [];
 
     $responses = [];
@@ -72,8 +72,8 @@ function yfDecode_batch()
         $responses[] = $payload;
     }
 
-    file_put_contents(__DIR__ . '/../storage/yf_nonces.json', json_encode(array_slice($nonces, -1000)));
-    file_put_contents(__DIR__ . '/../storage/yf_decode.log', json_encode(['time' => time(), 'count' => count($responses)]) . PHP_EOL, FILE_APPEND);
+    file_put_contents(__DIR__ . '/../../storage/yf_nonces.json', json_encode(array_slice($nonces, -1000)));
+    file_put_contents(__DIR__ . '/../../storage/yf_decode.log', json_encode(['time' => time(), 'count' => count($responses)]) . PHP_EOL, FILE_APPEND);
 
     echo json_encode($responses);
 }

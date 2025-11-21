@@ -294,13 +294,15 @@ if (!validateDestName($destName)) {
 $baseIncludes = [
     'path.php',
     'composer.json',
-    'core',
-    'configs',
-    'middlewares',
-    'routes',
-    'helpers',
+    'app',
+    // 'core',
+    // 'configs',
+    // 'middlewares',
+    // 'routes',
+    // 'helpers',
     'public',
-    'api',
+    // 'storage',
+    // 'api',
 ];
 $includes = $baseIncludes;
 
@@ -329,17 +331,17 @@ $modelPaths = normalizeList_safe($modelsArg, 'models');
 
 /* If no specific controllers/models/views provided, include entire folders */
 if (empty($controllerPaths)) {
-    $includes[] = 'controllers';
+    $includes[] = 'app/controllers';
 } else {
     foreach ($controllerPaths as $p) $includes[] = $p;
 }
 if (empty($viewPaths)) {
-    $includes[] = 'views';
+    $includes[] = 'app/views';
 } else {
     foreach ($viewPaths as $p) $includes[] = $p;
 }
 if (empty($modelPaths)) {
-    $includes[] = 'models';
+    $includes[] = 'app/models';
 } else {
     foreach ($modelPaths as $p) $includes[] = $p;
 }

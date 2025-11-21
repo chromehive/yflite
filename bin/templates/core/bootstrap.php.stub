@@ -15,13 +15,37 @@ $routes = require_once __DIR__ . '/route.php';
 // Get request URI safely
 if (!isset($_SERVER['REQUEST_URI'])) return;
 
-$parsed = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-if ($parsed === false) {
+$rawUri = $_SERVER['REQUEST_URI'] ?? '/';
+
+$parsed = parse_url($rawUri, PHP_URL_PATH);
+
+if ($parsed === false || $parsed === null) {
     header("Location: /");
     exit;
 }
 
+// Ensure $parsed is ALWAYS a string
+if (!is_string($parsed)) {
+    $parsed = '/';
+}
+
+// Normalize duplicate slashes anywhere (except http://)
+$parsed = preg_replace('#/+#', '/', $parsed);
+
+// SECURITY: Block directory traversal and hidden-dot attacks
+if (preg_match('#(\.\./|\./|//\.|^\.{1,2}$)#', $parsed)) {
+    http_response_code(400);
+    exit('Invalid URI');
+}
+
+// SECURITY: block deeply suspicious sequences of dots
+if (preg_match('#\.{3,}#', $parsed)) {
+    http_response_code(400);
+    exit('Invalid URI');
+}
+
 $uri = rtrim($parsed, '/');
+
 if ($uri === '' || $uri === false) {
     $uri = '/';
 }
@@ -50,7 +74,7 @@ $default_aliases = [
 /**
  * Expand route aliases into regex groups and collect parameter names.
  *
- * @param string $pattern Route pattern from routes/index.php (may include :tokens)
+ * @param string $pattern Route pattern from app/routes/index.php in base directory (may include :tokens)
  * @param array $aliases Alias map token => regex (optional)
  * @param array &$paramNames Output param names (ordered)
  * @return string Expanded pattern (regex-ready, without ^ $ anchors)
@@ -177,5 +201,5 @@ foreach ($routes as $route) {
 if (!$matched) {
     http_response_code(404);
     $GLOBALS['route_params'] = [];
-    render('_404', ['pageTitle' => '404 Not Found']);
+    render('404', ['pageTitle' => '404 Not Found']);
 }
