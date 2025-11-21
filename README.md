@@ -82,6 +82,7 @@ If the name of the build folder is omitted along with the `--dest` flag, the def
 ├── models/
 ├── helpers/
 ├── middlewares/
+├── routes/
 ├── vendor/
 ├── public/
 │   ├── assets/
@@ -180,3 +181,4 @@ Routes with middleware(s):
 ```
 
 ### Last Updated: November 20, 2025
+
