@@ -73,15 +73,25 @@ If the name of the build folder is omitted along with the `--dest` flag, the def
 
 ```bash
 <your-app-name>/
-├── controllers/
-│   └── public.php
-├── configs/
-│   ├── index.php  # Modifiable Configurations File
-│   └── route_aliases.php
-├── core/
-├── models/
-├── helpers/
-├── middlewares/
+├── app/
+│   ├── _core/
+│   ├── configs/
+│   │   ├── index.php  # Modifiable Configurations File
+│   │   └── route_aliases.php
+│   ├── controllers/
+│   │   └── public.php  # Controls some non-dashboard pages
+│   ├── helpers/
+│   ├── middlewares/
+│   ├── models/
+│   ├── routes/
+│   └── views/
+│       ├── components/
+│       ├── layouts/
+│       │   ├── dashboard.php
+│       │   └── main.php
+│       └── pages/
+│           ├── 404.php
+│           └── home.php
 ├── vendor/
 ├── public/
 │   ├── assets/
@@ -90,16 +100,13 @@ If the name of the build folder is omitted along with the `--dest` flag, the def
 │   ├── index.php    # Server entry point
 │   ├── robots.txt
 │   └── sitemap.txt
-├── views/
-│   ├── components/
-│   ├── layouts/
-│   │   ├── main.php
-│   │   └── dashboard.php
-│   └── pages/
-│       ├── _404.php
-│       └── home.php
+├── storage/
+│   ├── cache/
+│   └── logs/
+├── tests/
 ├── composer.json
-└── path.php    # Modifiable Path Constants File
+├── path.php    # Modifiable Path Constants File
+└── README.md
 ```
 
 The YFlite CLI provides several generators:
@@ -179,4 +186,4 @@ Routes with middleware(s):
     ['METHOD', '/route', 'ctrlrfile:function', 'mwfile1:mwfunc1, mwfile2:mwfunc2'],
 ```
 
-### Last Updated: November 20, 2025
+### Last Updated: November 21, 2025

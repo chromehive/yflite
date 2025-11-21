@@ -6,12 +6,18 @@
  */
 
 define('BASE_DIR', __DIR__); // please leave untouched
-define('CORE_DIR', BASE_DIR . '/core'); // please leave untouched
+define('APP_DIR', BASE_DIR . '/app'); // please leave untouched
 define('PUBLIC_DIR', BASE_DIR . '/public'); // /public_html or your server's public entry
-define('CONTROLLERS_DIR', BASE_DIR . '/controllers');
-define('CONFIGS_DIR', BASE_DIR . '/configs');
-define('VIEWS_DIR', BASE_DIR . '/views');
-define('MODELS_DIR', BASE_DIR . '/models');
+
+define('CORE_DIR', APP_DIR . '/_core'); // please leave untouched
+define('CONFIGS_DIR', APP_DIR . '/configs');
+define('HELPERS_DIR', APP_DIR . '/helpers');
+define('MIDDLEWARES_DIR', APP_DIR . '/middlewares');
+define('CONTROLLERS_DIR', APP_DIR . '/controllers');
+define('MODELS_DIR', APP_DIR . '/models');
+define('ROUTES_DIR', APP_DIR . '/routes');
+define('VIEWS_DIR', APP_DIR . '/views');
+
 define('STORAGE_DIR', BASE_DIR . '/storage');
 define('CACHE_DIR', STORAGE_DIR . '/cache');
 define('LOGS_DIR', STORAGE_DIR . '/logs');

@@ -8,6 +8,15 @@
             <a href="/" hx-replace-url="true" hx-boost="true" hx-target="body">
                 Return Home
             </a>
+            <br><br>
+            <a href="/"
+                <?= yf([
+                    'hx-replace-url' => true,
+                    'hx-boost' => true,
+                    'hx-target' => 'body'
+                ]); ?>>
+                Secured Return Home With YF
+            </a>
         </p>
     </div>
 </div>

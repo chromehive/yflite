@@ -35,18 +35,22 @@ function createProjectStructure(string $templateDir = null, string $newProjectDi
 
     // Create directories
     $directories = [
-        'configs',
-        'controllers',
-        'core',
-        'helpers',
-        'middlewares',
-        'models',
-        'routes',
-        'views/components',
-        'views/layouts',
-        'views/pages',
+        'app/_core',
+        'app/configs',
+        'app/controllers',
+        'app/helpers',
+        'app/middlewares',
+        'app/models',
+        'app/routes',
+        'app/views/components',
+        'app/views/layouts',
+        'app/views/pages',
         'public/assets/css',
         'public/assets/js',
+        'storage/cache',
+        'storage/logs',
+        'tests',
+        '.vscode',
     ];
 
     foreach ($directories as $dir) {
@@ -58,28 +62,30 @@ function createProjectStructure(string $templateDir = null, string $newProjectDi
 
     // Creates from or copies template files (See If We Can Avoid Repeating This Files Block Without An Issue)
     $files = [
+        '.env' => TemplateLoader::load('env.stub'),
         'path.php' => TemplateLoader::load('path.php.stub'),
         'README.md' => TemplateLoader::load('README.md.stub'),
-        'core/bootstrap.php' => TemplateLoader::load('core/bootstrap.php.stub'),
-        'core/config.php' => TemplateLoader::load('core/config.php.stub'),
-        'core/helper.php' => TemplateLoader::load('core/helper.php.stub'),
-        'core/route.php' => TemplateLoader::load('core/route.php.stub'),
-        'core/security.php' => TemplateLoader::load('core/security.php.stub'),
-        'core/yf.php' => TemplateLoader::load('core/yf.php.stub'),
-        'configs/index.php' => TemplateLoader::load('configs/index.php.stub'),
-        'configs/route_aliases.php' => TemplateLoader::load('configs/route_aliases.php.stub'),
-        'helpers/index.php' => TemplateLoader::load('helpers/index.php.stub'),
-        'routes/index.php' => TemplateLoader::load('routes/index.php.stub'),
-        'controllers/public.php' => TemplateLoader::render('controller_alt.php.stub', ['title' => 'Public', 'controllerName' => 'home']),
-        'middlewares/auth.php' => TemplateLoader::load('auth.php.stub'),
-        'views/layouts/main.php' => TemplateLoader::load('layouts/main.php.stub'),
-        'views/layouts/dashboard.php' => TemplateLoader::load('layouts/dashboard.php.stub'),
-        'views/components/head.php' => TemplateLoader::load('components/head.php.stub'),
-        'views/components/header.php' => TemplateLoader::load('components/header.php.stub'),
-        'views/components/foot.php' => TemplateLoader::load('components/foot.php.stub'),
-        'views/components/footer.php' => TemplateLoader::load('components/footer.php.stub'),
-        'views/pages/home.php' => TemplateLoader::render('home.php.stub', ['title' => 'Home', 'fileName' => 'home']),
-        'views/pages/_404.php' => TemplateLoader::render('404.php.stub', ['name' => '404']),
+        'app/_core/bootstrap.php' => TemplateLoader::load('core/bootstrap.php.stub'),
+        'app/_core/config.php' => TemplateLoader::load('core/config.php.stub'),
+        'app/_core/helper.php' => TemplateLoader::load('core/helper.php.stub'),
+        'app/_core/route.php' => TemplateLoader::load('core/route.php.stub'),
+        'app/_core/security.php' => TemplateLoader::load('core/security.php.stub'),
+        'app/_core/yf.php' => TemplateLoader::load('core/yf.php.stub'),
+        'app/_core/env.php' => TemplateLoader::load('core/env.php.stub'),
+        'app/configs/index.php' => TemplateLoader::load('configs/index.php.stub'),
+        'app/configs/route_aliases.php' => TemplateLoader::load('configs/route_aliases.php.stub'),
+        'app/helpers/index.php' => TemplateLoader::load('helpers/index.php.stub'),
+        'app/routes/index.php' => TemplateLoader::load('routes/index.php.stub'),
+        'app/controllers/public.php' => TemplateLoader::render('controller_alt.php.stub', ['title' => 'Public', 'controllerName' => 'home']),
+        'app/middlewares/auth.php' => TemplateLoader::load('auth.php.stub'),
+        'app/views/layouts/main.php' => TemplateLoader::load('layouts/main.php.stub'),
+        'app/views/layouts/dashboard.php' => TemplateLoader::load('layouts/dashboard.php.stub'),
+        'app/views/components/head.php' => TemplateLoader::load('components/head.php.stub'),
+        'app/views/components/header.php' => TemplateLoader::load('components/header.php.stub'),
+        'app/views/components/foot.php' => TemplateLoader::load('components/foot.php.stub'),
+        'app/views/components/footer.php' => TemplateLoader::load('components/footer.php.stub'),
+        'app/views/pages/home.php' => TemplateLoader::render('home.php.stub', ['title' => 'Home', 'fileName' => 'home']),
+        'app/views/pages/404.php' => TemplateLoader::render('404.php.stub', ['name' => '404']),
         'public/index.php' => TemplateLoader::load('public/index.php.stub'),
         'public/robots.txt' => TemplateLoader::load('public/robots.txt.stub'),
         'public/sitemap.txt' => TemplateLoader::load('public/sitemap.txt.stub'),
@@ -88,6 +94,7 @@ function createProjectStructure(string $templateDir = null, string $newProjectDi
         'public/assets/js/htmx2.min.js' => TemplateLoader::load('public/htmx2.min.js.stub'),
         'public/assets/js/hyperscript.min.js' => TemplateLoader::load('public/hyperscript.min.js.stub'),
         'public/assets/js/yf-interpreter.js' => TemplateLoader::load('public/yf-interpreter.js.stub'),
+        '.vscode/yflite.code-snippets' => TemplateLoader::load('vscode/yflite.code-snippets.stub'),
     ];
 
     foreach ($files as $path => $content) {
@@ -151,18 +158,22 @@ function createProjectStructureSafe(string $templateDir = null, string $newProje
 
     // Create directories
     $directories = [
-        'configs',
-        'controllers',
-        'core',
-        'helpers',
-        'middlewares',
-        'models',
-        'routes',
-        'views/components',
-        'views/layouts',
-        'views/pages',
+        'app/_core',
+        'app/configs',
+        'app/controllers',
+        'app/helpers',
+        'app/middlewares',
+        'app/models',
+        'app/routes',
+        'app/views/components',
+        'app/views/layouts',
+        'app/views/pages',
         'public/assets/css',
         'public/assets/js',
+        'storage/cache',
+        'storage/logs',
+        'tests',
+        '.vscode',
     ];
 
     foreach ($directories as $dir) {
@@ -174,28 +185,30 @@ function createProjectStructureSafe(string $templateDir = null, string $newProje
 
     // Files to create with their content (See If We Can Avoid Repeating This Files Block Without An Issue)
     $files = [
+        '.env' => TemplateLoader::load('env.stub'),
         'path.php' => TemplateLoader::load('path.php.stub'),
         'README.md' => TemplateLoader::load('README.md.stub'),
-        'core/bootstrap.php' => TemplateLoader::load('core/bootstrap.php.stub'),
-        'core/config.php' => TemplateLoader::load('core/config.php.stub'),
-        'core/helper.php' => TemplateLoader::load('core/helper.php.stub'),
-        'core/route.php' => TemplateLoader::load('core/route.php.stub'),
-        'core/security.php' => TemplateLoader::load('core/security.php.stub'),
-        'core/yf.php' => TemplateLoader::load('core/yf.php.stub'),
-        'configs/index.php' => TemplateLoader::load('configs/index.php.stub'),
-        'configs/route_aliases.php' => TemplateLoader::load('configs/route_aliases.php.stub'),
-        'helpers/index.php' => TemplateLoader::load('helpers/index.php.stub'),
-        'routes/index.php' => TemplateLoader::load('routes/index.php.stub'),
-        'controllers/public.php' => TemplateLoader::render('controller_alt.php.stub', ['title' => 'Public', 'controllerName' => 'home']),
-        'middlewares/auth.php' => TemplateLoader::load('auth.php.stub'),
-        'views/layouts/main.php' => TemplateLoader::load('layouts/main.php.stub'),
-        'views/layouts/dashboard.php' => TemplateLoader::load('layouts/dashboard.php.stub'),
-        'views/components/head.php' => TemplateLoader::load('components/head.php.stub'),
-        'views/components/header.php' => TemplateLoader::load('components/header.php.stub'),
-        'views/components/foot.php' => TemplateLoader::load('components/foot.php.stub'),
-        'views/components/footer.php' => TemplateLoader::load('components/footer.php.stub'),
-        'views/pages/home.php' => TemplateLoader::render('home.php.stub', ['title' => 'Home', 'fileName' => 'home']),
-        'views/pages/_404.php' => TemplateLoader::render('404.php.stub', ['name' => '404']),
+        'app/_core/bootstrap.php' => TemplateLoader::load('core/bootstrap.php.stub'),
+        'app/_core/config.php' => TemplateLoader::load('core/config.php.stub'),
+        'app/_core/helper.php' => TemplateLoader::load('core/helper.php.stub'),
+        'app/_core/route.php' => TemplateLoader::load('core/route.php.stub'),
+        'app/_core/security.php' => TemplateLoader::load('core/security.php.stub'),
+        'app/_core/yf.php' => TemplateLoader::load('core/yf.php.stub'),
+        'app/_core/env.php' => TemplateLoader::load('core/env.php.stub'),
+        'app/configs/index.php' => TemplateLoader::load('configs/index.php.stub'),
+        'app/configs/route_aliases.php' => TemplateLoader::load('configs/route_aliases.php.stub'),
+        'app/helpers/index.php' => TemplateLoader::load('helpers/index.php.stub'),
+        'app/routes/index.php' => TemplateLoader::load('routes/index.php.stub'),
+        'app/controllers/public.php' => TemplateLoader::render('controller_alt.php.stub', ['title' => 'Public', 'controllerName' => 'home']),
+        'app/middlewares/auth.php' => TemplateLoader::load('auth.php.stub'),
+        'app/views/layouts/main.php' => TemplateLoader::load('layouts/main.php.stub'),
+        'app/views/layouts/dashboard.php' => TemplateLoader::load('layouts/dashboard.php.stub'),
+        'app/views/components/head.php' => TemplateLoader::load('components/head.php.stub'),
+        'app/views/components/header.php' => TemplateLoader::load('components/header.php.stub'),
+        'app/views/components/foot.php' => TemplateLoader::load('components/foot.php.stub'),
+        'app/views/components/footer.php' => TemplateLoader::load('components/footer.php.stub'),
+        'app/views/pages/home.php' => TemplateLoader::render('home.php.stub', ['title' => 'Home', 'fileName' => 'home']),
+        'app/views/pages/404.php' => TemplateLoader::render('404.php.stub', ['name' => '404']),
         'public/index.php' => TemplateLoader::load('public/index.php.stub'),
         'public/robots.txt' => TemplateLoader::load('public/robots.txt.stub'),
         'public/sitemap.txt' => TemplateLoader::load('public/sitemap.txt.stub'),
@@ -204,6 +217,7 @@ function createProjectStructureSafe(string $templateDir = null, string $newProje
         'public/assets/js/htmx2.min.js' => TemplateLoader::load('public/htmx2.min.js.stub'),
         'public/assets/js/hyperscript.min.js' => TemplateLoader::load('public/hyperscript.min.js.stub'),
         'public/assets/js/yf-interpreter.js' => TemplateLoader::load('public/yf-interpreter.js.stub'),
+        '.vscode/yflite.code-snippets' => TemplateLoader::load('vscode/yflite.code-snippets.stub'),
     ];
 
     foreach ($files as $path => $content) {
@@ -226,8 +240,8 @@ function makePage($name)
     $parts = explode('/', $filePath);
     $fileName = array_pop($parts);
 
-    // Build the target directory under the consuming project (always ensure views/pages exists)
-    $baseViewsDir = rtrim($projectRoot, '/\\') . '/views/pages';
+    // Build the target directory under the consuming project (always ensure app/views/pages exists)
+    $baseViewsDir = rtrim($projectRoot, '/\\') . '/app/views/pages';
     $subPath = implode('/', array_filter($parts, function ($p) {
         return $p !== '';
     }));
@@ -242,7 +256,7 @@ function makePage($name)
     $pagePath = rtrim($dirPath, '/\\') . '/' . $fileName . '.php';
 
     if (file_exists($pagePath)) {
-        echo "⚠️ Page already exists: views/pages/" . str_replace($projectRoot . '/views/pages/', '', $pagePath) . "\n";
+        echo "⚠️ Page already exists: app/views/pages/" . str_replace($projectRoot . '/app/views/pages/', '', $pagePath) . "\n";
         return false;
     }
 
@@ -254,7 +268,7 @@ function makePage($name)
     ]);
 
     file_put_contents($pagePath, $template);
-    echo "✅ Page created: views/pages/" . str_replace($projectRoot . '/views/pages/', '', $pagePath) . "\n";
+    echo "✅ Page created: app/views/pages/" . str_replace($projectRoot . '/app/views/pages/', '', $pagePath) . "\n";
     return true;
 }
 
@@ -286,7 +300,7 @@ function makeController($name)
     // // Generate controller
     // $name = ucfirst(str_replace('Controller', '', $name));
     // $content = TemplateLoader::render('controller_alt.php.stub', ['title' => $name, 'controllerName' => $name]);
-    // $controllerPath = $projectRoot . '/controllers/' . strtolower($name) . '.php';
+    // $controllerPath = $projectRoot . '/app/controllers/' . strtolower($name) . '.php';
 
     // if (!is_dir(dirname($controllerPath))) {
     //     mkdir(dirname($controllerPath), 0777, true);
@@ -298,7 +312,7 @@ function makeController($name)
     // }
 
     // file_put_contents($controllerPath, $content);
-    // echo "✅ Controller Created: controllers/" . basename($controllerPath) . "\n";
+    // echo "✅ Controller Created: app/controllers/" . basename($controllerPath) . "\n";
     // exit(0);
 
     $filePath = strtolower($name);
@@ -321,7 +335,7 @@ function makeController($name)
     $controllerPath = rtrim($dirPath, '/\\') . '/' . $fileName . '.php';
 
     if (file_exists($controllerPath)) {
-        echo "⚠️ Controller already exists: controllers/" . str_replace($projectRoot . '/controllers/', '', $controllerPath) . "\n";
+        echo "⚠️ Controller already exists: app/controllers/" . str_replace($projectRoot . '/app/controllers/', '', $controllerPath) . "\n";
         return false;
     }
 
@@ -333,7 +347,7 @@ function makeController($name)
     ]);
 
     file_put_contents($controllerPath, $template);
-    echo "✅ Controller created: controllers/" . str_replace($projectRoot . '/controllers/', '', $controllerPath) . "\n";
+    echo "✅ Controller created: app/controllers/" . str_replace($projectRoot . '/app/controllers/', '', $controllerPath) . "\n";
     return true;
 }
 
@@ -504,15 +518,15 @@ function fieldsRequireMultipart($fields)
 }
 
 /**
- * Inject a single route into routes/index.php
+ * Inject a single route into app/routes/index.php
  */
 function injectRoute($method, $path, $handler)
 {
     global $projectRoot;
-    $routesFile = $projectRoot . '/routes/index.php';
+    $routesFile = $projectRoot . '/app/routes/index.php';
 
     if (!file_exists($routesFile)) {
-        echo "⚠️ routes/index.php not found. Creating it...\n";
+        echo "⚠️ app/routes/index.php not found. Creating it...\n";
         file_put_contents($routesFile, "<?php\n\nreturn [\n];\n");
     }
 
@@ -625,7 +639,7 @@ function makeCrud($name, $fields = null)
     // Create directories
     $controllerDir = $projectRoot . '/controllers';
     $modelDir = $projectRoot . '/models';
-    $viewDir = $projectRoot . '/views/pages/' . $resource;
+    $viewDir = $projectRoot . '/app/views/pages/' . $resource;
 
     foreach ([$controllerDir, $modelDir, $viewDir] as $dir) {
         if (!is_dir($dir)) {
@@ -641,9 +655,9 @@ function makeCrud($name, $fields = null)
             'resource' => $resource,
         ]);
         file_put_contents($controllerPath, $controllerTemplate);
-        echo "✅ Controller created: controllers/$resource.php\n";
+        echo "✅ Controller created: app/controllers/$resource.php\n";
     } else {
-        echo "⚠️ Controller already exists: controllers/$resource.php\n";
+        echo "⚠️ Controller already exists: app/controllers/$resource.php\n";
     }
 
     // Generate model
@@ -685,13 +699,13 @@ function makeCrud($name, $fields = null)
 
         $viewContent = TemplateLoader::render($templateName, $viewVars);
         file_put_contents($viewPath, $viewContent);
-        echo "✅ View created: views/pages/$resource/$viewName.php\n";
+        echo "✅ View created: app/views/pages/$resource/$viewName.php\n";
     }
 
     // Inject routes
     $routesInjected = injectCrudRoutes($resource, $className);
     if ($routesInjected > 0) {
-        echo "✅ $routesInjected CRUD routes added to routes/index.php\n";
+        echo "✅ $routesInjected CRUD routes added to app/routes/index.php\n";
     }
 
     echo "✅ CRUD scaffolding complete for: $name\n";

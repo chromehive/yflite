@@ -5,7 +5,7 @@
  * Generate routes, pages, CRUD operations, and models
  */
 
-define('YFLITE_VERSION', '1.1.0');
+define('YFLITE_VERSION', '1.2.0');
 require_once __DIR__ . '/Generators.php';
 
 // Initialize template loader to use package templates
@@ -49,6 +49,7 @@ if ($command === 'build') {
     $allowedArgs = [
         '--dest',
         '--zip',
+        '--help',
         '--controllers',
         '--models',
         '--views',
@@ -107,7 +108,7 @@ if (!$command || $command === '-h' || $command === '--help') {
     echo "  make:crud <resourceName> [--fields=\"...\"]  Generate full CRUD\n";
     echo "  make:model <ModelName> [--table=table_name]  Generate model\n";
     echo "  make:route <METHOD> <path> <handler>  Add route\n";
-    echo "  build --help\n                     Display list of build commands\n";
+    echo "  build --help\n                     Display list of YFlite build commands\n";
     echo "  build [--dest=<project-build-name>] [--zip] Get Production Build\n";
     echo "Examples:\n";
     echo "  yflite new fire-app\n";
@@ -269,4 +270,3 @@ switch ($command) {
         echo "Run 'yflite -h' to see available commands.\n";
         exit(1);
 }
-

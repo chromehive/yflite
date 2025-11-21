@@ -1,0 +1,73 @@
+{
+  "YFlite YF Attribute (array syntax)": {
+    "prefix": ["yf", "yfa", "yflite-attr"],
+    "body": [
+      "<?= yf([",
+      "    '${1:attribute}' => ${2:\"${3:value}\"}",
+      "]) ?>$0"
+    ],
+    "description": "Insert secure YFlite yf() attribute builder"
+  },
+
+  "YFlite HTMX GET": {
+    "prefix": ["yfget", "yfg"],
+    "body": [
+      "<?= yf([",
+      "    'hx-get' => '${1:/route}',",
+      "    'hx-target' => '${2:#target}',",
+      "    'hx-swap' => '${3:innerHTML}'",
+      "]) ?>$0"
+    ],
+    "description": "Common HTMX GET through YF attribute"
+  },
+
+  "YFlite HTMX POST with CSRF": {
+    "prefix": ["yfpost", "yfp"],
+    "body": [
+      "<?= yf([",
+      "    'hx-post' => '${1:/route}',",
+      "    'hx-target' => '${2:#target}',",
+      "    'hx-headers' => ['X-CSRF' => $csrfToken],",
+      "    'hx-swap' => '${3:innerHTML}'",
+      "]) ?>$0"
+    ],
+    "description": "HTMX POST with CSRF using YF attribute"
+  },
+
+  "YFlite HTMX Boost": {
+    "prefix": ["yfboost", "yfb"],
+    "body": [
+      "<?= yf([",
+      "    'hx-boost' => true,",
+      "    'hx-replace-url' => true,",
+      "    'hx-target' => '${1:body}'",
+      "]) ?>$0"
+    ],
+    "description": "HTMX boost + replace URL + target"
+  },
+
+  "YFlite HTMX Headers (JSON Support)": {
+    "prefix": ["yfheaders", "yfh"],
+    "body": [
+      "<?= yf([",
+      "    'hx-headers' => [",
+      "        '${1:Header-Name}' => '${2:value}'",
+      "    ]",
+      "]) ?>$0"
+    ],
+    "description": "Insert hx-headers with JSON safe array via YF"
+  },
+
+  "YFlite Multi-Attr": {
+    "prefix": ["yfmulti", "yfattrs"],
+    "body": [
+      "<?= yf([",
+      "    'hx-get' => '${1:/route}',",
+      "    'hx-indicator' => '${2:#loading}',",
+      "    'hx-target' => '${3:#content}',",
+      "    'hx-push-url' => ${4:true}",
+      "]) ?>$0"
+    ],
+    "description": "Multiple YF attributes with common HTMX combos"
+  }
+}
