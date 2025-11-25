@@ -1,0 +1,61 @@
+function data() {
+  // This Theme Script Works
+  function themeSwitcher() {
+    return {
+      theme: "light",
+      themeMode: "system", // "light" | "dark" | "system"
+
+      applyTheme(theme) {
+        this.theme = theme;
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(theme);
+      },
+
+      setMode(mode) {
+        // mode = "light" | "dark" | "system"
+        this.themeMode = mode;
+        localStorage.setItem("themeMode", mode);
+
+        if (mode === "light") {
+          this.applyTheme("light");
+        } else if (mode === "dark") {
+          this.applyTheme("dark");
+        } else if (mode === "system") {
+          const systemDark = window.matchMedia(
+            "(prefers-color-scheme: dark)"
+          ).matches;
+          const sysTheme = systemDark ? "dark" : "light";
+          this.applyTheme(sysTheme);
+        }
+      },
+
+      init() {
+        const systemPref = window.matchMedia("(prefers-color-scheme: dark)");
+        const savedMode = localStorage.getItem("themeMode");
+
+        // Load mode from storage
+        this.themeMode = savedMode || "system";
+
+        // Apply initial theme based on mode
+        if (this.themeMode === "light") {
+          this.applyTheme("light");
+        } else if (this.themeMode === "dark") {
+          this.applyTheme("dark");
+        } else {
+          const sysTheme = systemPref.matches ? "dark" : "light";
+          this.applyTheme(sysTheme);
+        }
+
+        // Only respond to system changes if mode === system
+        systemPref.addEventListener("change", (e) => {
+          if (this.themeMode !== "system") return;
+
+          const sysTheme = e.matches ? "dark" : "light";
+          this.applyTheme(sysTheme);
+        });
+      },
+    };
+  }
+
+  return themeSwitcher();
+}

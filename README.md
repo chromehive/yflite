@@ -186,4 +186,4 @@ Routes with middleware(s):
     ['METHOD', '/route', 'ctrlrfile:function', 'mwfile1:mwfunc1, mwfile2:mwfunc2'],
 ```
 
-### Last Updated: November 21, 2025
+### Last Updated: November 25, 2025
