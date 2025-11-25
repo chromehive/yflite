@@ -1,8 +1,67 @@
-<div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Welcome {{title}}</h1>
-    
-    <!-- Add your page content here -->
-    <div class="mt-4">
-        <p class="text-gray-600">This is the {{fileName}} page of your YFlite application.</p>
-    </div>
+<div class="container mx-auto px-4 md:px-16 py-20 bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100 min-h-screen transition-colors duration-300"">
+    <section class="max-w-5xl mx-auto">
+        <!-- Toggle Theme (System|Dark|Light Modes) -->
+        <div class="flex gap-2 justify-center">
+            <button class="p-4" @click="setMode('light')"
+                :class="themeMode === 'light' ? 'font-bold underline' : ''">
+                Light
+            </button>
+
+            <button class="p-4" @click="setMode('dark')"
+                :class="themeMode === 'dark' ? 'font-bold underline' : ''">
+                Dark
+            </button>
+
+            <button class="p-4" @click="setMode('system')"
+                :class="themeMode === 'system' ? 'font-bold underline' : ''">
+                System
+            </button>
+        </div>
+
+        <div class="text-center w-full flex flex-col">
+            <h1 class="text-5xl sm:text-6xl font-extrabold mb-6 tracking-tight">
+                Build Faster with <span class="text-green-400">YFlite</span>
+            </h1>
+
+            <div class="">
+                <p class="text-2xl text-gray-800 dark:text-gray-100 mb-10 leading-relaxed">
+                    A new PHP development experience with zero bloat, instant DX, built-in security, reactivity by choice and beautifully simple SSR to improve SEO-optimisation and plaform security.
+                </p>
+            </div>
+        </div>
+        
+        <div class="bg-gray-900 rounded-xl p-6 shadow-xl border border-gray-800">
+            <p class="font-mono text-lg text-gray-100 dark:text-gray-100 mb-3">Install YFlite</p>
+
+            <div class="bg-black/50 border border-gray-700 p-4 rounded-lg font-mono text-green-400">
+                composer global require chromehive/yflite
+            </div>
+        </div>
+
+        <h2 class="text-3xl font-semibold mt-20 mb-5">Why YFlite?</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h3 class="text-xl text-green-400 mb-2 font-semibold">Super Fast</h3>
+                <p class="text-gray-700 dark:text-gray-300">No autoloading overhead. No framework bloat. Ultra-lean routing.</p>
+            </div>
+
+            <div>
+                <h3 class="text-xl text-green-400 mb-2 font-semibold">Functional PHP</h3>
+                <p class="text-gray-700 dark:text-gray-300">Simple functions, clean architecture, OOP only when you want.</p>
+            </div>
+
+            <div>
+                <h3 class="text-xl text-green-400 mb-2 font-semibold">Secure</h3>
+                <p class="text-gray-700 dark:text-gray-300">Optional encrypted HTMX attributes using the yf="" attribute.</p>
+            </div>
+        </div>
+
+        <h2 class="text-3xl font-semibold mt-20 mb-5">Example Route</h2>
+        <pre class="bg-gray-900 border-gray-800 text-gray-100 p-6 rounded-xl border text-sm overflow-x-auto">
+<code>return [
+    ["GET", "/", "public:home"],
+    ["GET", "/blog", "public:blog"],
+];</code></pre>
+    </section>
 </div>

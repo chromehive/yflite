@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+
+@layer components {
+  /* .post-body ul,
+  .policy-body ul,
+  .article-body ul,
+  .doc-body ul {
+    @apply list-disc;
+  }
+
+  .post-body ol,
+  .policy-body ol,
+  .article-body ol,
+  .doc-body ol {
+    @apply list-decimal;
+  }
+
+  .post-body ul,
+  .policy-body ul,
+  .article-body ul,
+  .doc-body ul,
+  .post-body ol,
+  .policy-body ol,
+  .article-body ol,
+  .doc-body ol,
+  .post-body ul li,
+  .post-body ul li,
+  .policy-body ul li,
+  .policy-body ol li,
+  .article-body ul li,
+  .article-body ol li,
+  .doc-body ul li,
+  .doc-body ol li {
+    @apply ml-5;
+  }
+
+  .post-body h2,
+  .doc-body h2,
+  .article-body h2 {
+    @apply text-[1.5rem] pt-7 md:text-3xl 2xl:text-[3rem] 2xl:leading-[3rem] leading-6 pb-4 italic font-serif;
+  }
+
+  .post-body p,
+  .doc-body p,
+  .article-body p {
+    @apply text-lg mb-[1.2rem] 2xl:text-[2rem] 2xl:leading-[3rem] font-sans;
+  }
+
+  .post-body h3,
+  .doc-body h3,
+  .article-body h3 {
+    @apply text-[1.1rem] pt-4 md:text-2xl 2xl:text-[2.5rem] 2xl:leading-[2.5rem] leading-6 pb-3 italic font-sans;
+  }
+
+  .post-body code,
+  .doc-body code,
+  .article-body code {
+    @apply text-gray-600;
+  }
+
+  .post-body pre,
+  .doc-body pre,
+  .article-body pre {
+    @apply bg-gray-900 text-white font-mono p-3 rounded-md;
+  }
+
+  .post-body pre code,
+  .doc-body pre code,
+  .article-body pre code {
+    @apply text-inherit p-0 bg-none text-sm;
+  }
+
+  .post-body img,
+  .doc-body img,
+  .article-body img {
+    @apply max-w-full h-auto;
+  }
+
+  .post-body blockquote,
+  .doc-body blockquote,
+  .article-body blockquote {
+    @apply pl-4 border-l-2 border-solid border-gray-300 dark:border-gray-500;
+  }
+
+  .post-body hr,
+  .doc-body hr,
+  .article-body hr {
+    @apply border-t-2 border-solid border-gray-100 dark:border-gray-300 my-8;
+  } */
+}
+
+@tailwind utilities;
