@@ -43,6 +43,29 @@ if (!function_exists('render')) {
     }
 }
 
+if (!function_exists('yui')) {
+    /**
+     * Component renderer
+     * @param string $name Component name
+     * @param array $props Props to pass to component
+     */
+    function yui($name, $props = [])
+    {
+        // $path = __DIR__ . "/../views/components/" . str_replace('.', '/', $name) . ".php";
+        $path = __DIR__ . "/../views/components/yui/" . $name . ".php";
+
+        // var_dump($path);
+        if (!file_exists($path)) {
+            // Trigger (re)generation of yui components files when not found in views
+            echo "<!-- Component '$name' not found -->";
+        } else {
+            echo "<!-- Rendered Component '$name' -->";
+            extract($props);
+            include $path;
+        }
+    }
+}
+
 if (!function_exists('redirect')) {
     /**
      * Perform HTTP redirect
