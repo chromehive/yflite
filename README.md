@@ -186,7 +186,7 @@ Routes with middleware(s):
     ['METHOD', '/route', 'ctrlrfile:function', 'mwfile1:mwfunc1, mwfile2:mwfunc2'],
 ```
 
-## Only In Pre-release Version
+## Only In Versions >= v1.4.0
 
 Our YUI component library is available to you. Just call the yui() php function, pass the name of the component with props in `[]` and full blocks of components will get rendered from the `components/yui` views folder to aid your fast development. See the examples below. Note that the default props are `slot` (the children entities), `class` (the default parent classes which you can overwrite) and `extras` (which is any attributes you want placed to the parent component).
 
@@ -204,3 +204,4 @@ YUI]);
 ```
 
 ### Last Updated: December 12, 2025
+
