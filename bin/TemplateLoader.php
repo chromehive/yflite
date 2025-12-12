@@ -46,6 +46,51 @@ class TemplateLoader
     }
 
     /**
+     * Load an entire directory of templates (recursively) and return
+     * a flat array of relativePath => fileContents
+     *
+     * @param string $dir Relative directory inside templates/
+     * @param string $targetBase (optional) prefix for generated project folder
+     * @return array
+     */
+    public static function loadDir($dir, $targetBase = '')
+    {
+        $base = rtrim(self::getTemplateDir(), '/') . '/' . trim($dir, '/');
+
+        if (!is_dir($base)) {
+            throw new Exception("Template directory not found: $base");
+        }
+
+        $result = [];
+
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($base, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
+
+        foreach ($iterator as $file) {
+            if ($file->isFile()) {
+
+                $relative = trim(str_replace($base, '', $file->getPathname()), '/');
+
+                // Remove .stub in output while keeping folder structure
+                if (substr($relative, -5) === '.stub') {
+                    $outputPath = $targetBase . substr($relative, 0, -5);
+                    $content = file_get_contents($file->getPathname());
+                } else {
+                    // Non-stub (e.g. images, icons)
+                    $outputPath = $targetBase . $relative;
+                    $content = file_get_contents($file->getPathname());
+                }
+
+                $result[$outputPath] = $content;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Replace placeholders in template
      * @param string $template Template content
      * @param array $variables Associative array of variable => value

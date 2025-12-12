@@ -43,6 +43,7 @@ function createProjectStructure(string $templateDir = null, string $newProjectDi
         'app/models',
         'app/routes',
         'app/views/components',
+        'app/views/components/yui',
         'app/views/layouts',
         'app/views/pages',
         'public/assets/css',
@@ -100,6 +101,15 @@ function createProjectStructure(string $templateDir = null, string $newProjectDi
         'public/assets/js/yf-interpreter.js' => TemplateLoader::load('public/yf-interpreter.js.stub'),
         '.vscode/yflite.code-snippets' => TemplateLoader::load('vscode/yflite.code-snippets.stub'),
     ];
+
+    // Add directory load
+    $yuiComponents = TemplateLoader::loadDir(
+        'components/yui',                   // from templates/components/yui
+        'app/views/components/yui/'        // into project folder
+    );
+
+    // merge
+    $files = array_merge($files, $yuiComponents);
 
     foreach ($files as $path => $content) {
         if (!file_exists($dirNameChosen . $path)) {
@@ -170,6 +180,7 @@ function createProjectStructureSafe(string $templateDir = null, string $newProje
         'app/models',
         'app/routes',
         'app/views/components',
+        'app/views/components/yui',
         'app/views/layouts',
         'app/views/pages',
         'public/assets/css',
@@ -227,6 +238,15 @@ function createProjectStructureSafe(string $templateDir = null, string $newProje
         'public/assets/js/yf-interpreter.js' => TemplateLoader::load('public/yf-interpreter.js.stub'),
         '.vscode/yflite.code-snippets' => TemplateLoader::load('vscode/yflite.code-snippets.stub'),
     ];
+
+    // Add directory load
+    $yuiComponents = TemplateLoader::loadDir(
+        'components/yui',                   // from templates/components/yui
+        'app/views/components/yui/'        // into project folder
+    );
+
+    // merge
+    $files = array_merge($files, $yuiComponents);
 
     foreach ($files as $path => $content) {
         safeWriteFile($path, $content);

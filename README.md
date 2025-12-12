@@ -186,4 +186,21 @@ Routes with middleware(s):
     ['METHOD', '/route', 'ctrlrfile:function', 'mwfile1:mwfunc1, mwfile2:mwfunc2'],
 ```
 
-### Last Updated: November 25, 2025
+## Only In Pre-release Version
+
+Our YUI component library is available to you. Just call the yui() php function, pass the name of the component with props in `[]` and full blocks of components will get rendered from the `components/yui` views folder to aid your fast development. See the examples below. Note that the default props are `slot` (the children entities), `class` (the default parent classes which you can overwrite) and `extras` (which is any attributes you want placed to the parent component).
+
+```php
+<?php
+echo yui("alert", ['type' => "warning", 'slot' =>
+<<<YUI
+<h2>Warning: Your data bundle is down to 7MB. Wanna buy more?</h2>
+YUI]);
+
+echo yui("rich-editor", ['action' => '/posts', 'actionLabel' => 'Submit', 'slot' =>
+<<<YUI
+<h2>Rich Text Editor Works!</h2>
+YUI]);
+```
+
+### Last Updated: December 12, 2025
